@@ -1,0 +1,9 @@
+[
+  {
+    "AddinConnectorId": "e94f0293-9a0f-45f5-b83b-ba987473070f",
+    "AddinId": "6d1f157d-95bf-406d-b65d-cfd3240f724e",
+    "Name": "UploadFiletoDocumentLibrary",
+    "ServiceKind": "AddinWadl",
+    "Type": "ServiceInfo"
+  }
+]

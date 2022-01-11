@@ -1,0 +1,2106 @@
+EditContract As screen:
+    ContentLanguage: ="EditContract"
+
+    Header_7 As Header:
+
+    Navigation_7 As Navigation_1:
+        NavItem: |-
+            =Table({
+                Title: "NewContract",
+                TargetScreen: EditContract
+                },
+                {
+                Title: "SearchContract",
+                TargetScreen: SearchContract
+                },
+                {
+                Title: "Report",
+                TargetScreen: Record})
+        Y: =76
+        ZIndex: =2
+
+    Canvas1_2 As fluidGrid.fluidGridWithBlankCard:
+        BorderThickness: =0
+        Height: =680
+        Width: =1139
+        X: =227
+        Y: =RectQuickActionBar1.Y + RectQuickActionBar1.Height
+        ZIndex: =36
+
+        EditForm As dataCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =0
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =1503
+            Width: =1139
+            X: =0
+            Y: =0
+            ZIndex: =1
+
+            ContractForm_1 As form:
+                DataSource: =ContractManagementList
+                Height: =1449
+                Item: =GalEditContract.Selected
+                NumberOfColumns: =2
+                OnFailure: =Notify("Failure Submission",NotificationType.Error)
+                OnSuccess: =Notify("Success Submission",NotificationType.Success);ResetForm(ContractForm_1)
+                Width: =1088
+                X: =21
+                Y: =30
+                ZIndex: =1
+
+                SelectMainContract_1 As typedDataCard.blankCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DisplayMode: =DisplayMode.Edit
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =356
+                    Visible: =If(DefineContract_1.Selected.Value="附約",true,false)
+                    Width: =1088
+                    X: =0
+                    Y: =1
+                    ZIndex: =1
+
+                    Group2_4 As group:
+                        Height: =5
+                        Width: =5
+                        X: =40
+                        Y: =40
+                        ZIndex: =14
+
+                        VendorNameMainCon_1 As combobox:
+                            DisplayFields: =["Title"]
+                            Height: =42
+                            IsSearchable: =false
+                            Items: =VendorName
+                            OnSelect: =
+                            SearchFields: =["Title"]
+                            SearchItems: =[]
+                            Width: =234
+                            X: =27
+                            Y: =136
+                            ZIndex: =2
+
+                        Label5_38 As label:
+                            Height: =25
+                            OnSelect: =
+                            Text: ="Name"
+                            Width: =151
+                            X: =27
+                            Y: =102
+                            ZIndex: =3
+
+                        Label5_39 As label:
+                            Height: =23
+                            OnSelect: =
+                            Text: ="Number"
+                            Width: =128
+                            X: =381
+                            Y: =106
+                            ZIndex: =4
+
+                        ComboBox2_18 As combobox:
+                            DisplayFields: =["Title"]
+                            Height: =41
+                            IsSearchable: =false
+                            Items: =VendorNum
+                            OnSelect: =
+                            SearchFields: =["Title"]
+                            SearchItems: =[]
+                            Width: =211
+                            X: =381
+                            Y: =136
+                            ZIndex: =5
+
+                        Label4_19 As label:
+                            FontWeight: =FontWeight.Bold
+                            Height: =49
+                            OnSelect: =
+                            Size: =16
+                            Text: ="MainContract"
+                            Underline: =true
+                            Width: =434
+                            X: =21
+                            Y: =191
+                            ZIndex: =6
+
+                        Label5_41 As label:
+                            Height: =25
+                            OnSelect: =
+                            Text: ="Name"
+                            Width: =103
+                            X: =27
+                            Y: =240
+                            ZIndex: =7
+
+                        Label5_40 As label:
+                            Height: =38
+                            OnSelect: =
+                            Text: ="Number"
+                            Width: =144
+                            X: =561
+                            Y: =227
+                            ZIndex: =8
+
+                        MainContractName_1 As dropdown:
+                            Height: =42
+                            Items: =Filter(ContractManagementList,Vendor.Value=VendorNameMainCon_1.Selected.Title)
+                            OnSelect: =
+                            Width: =482
+                            X: =27
+                            Y: =265
+                            ZIndex: =9
+
+                        MainContractNum_1 As dropdown:
+                            Height: =42
+                            Items: =Filter(ContractManagementList,Vendor.Value=VendorNameMainCon_1.Selected.Title)
+                            OnSelect: =
+                            Width: =312
+                            X: =561
+                            Y: =265
+                            ZIndex: =10
+
+                        Label4_18 As label:
+                            FontWeight: =FontWeight.Bold
+                            Height: =43
+                            OnSelect: =
+                            Size: =16
+                            Text: ="Vendor"
+                            Underline: =true
+                            Width: =157
+                            X: =21
+                            Y: =59
+                            ZIndex: =11
+
+                    Group1_2 As group:
+                        Height: =5
+                        Width: =5
+                        X: =40
+                        Y: =40
+                        ZIndex: =14
+
+                        Rectangle9_2 As rectangle:
+                            Fill: =RGBA(230, 230, 230, 1)
+                            Height: =324
+                            Width: =1060
+                            X: =2
+                            Y: =16
+                            ZIndex: =1
+
+                        Title_rec_2 As rectangle:
+                            Fill: =RGBA(0, 121, 187, 1)
+                            Height: =49
+                            Width: =1062
+                            ZIndex: =12
+
+                        Label9_1 As label:
+                            Align: =Align.Center
+                            Color: =RGBA(255, 255, 255, 1)
+                            FontWeight: =FontWeight.Bold
+                            Height: =35
+                            Size: =16
+                            Text: ="Select Main Contract"
+                            Width: =305
+                            X: =381
+                            Y: =7
+                            ZIndex: =13
+
+                Append_1 As typedDataCard.blankCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DisplayMode: =DisplayMode.Edit
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =455
+                    Visible: =If(DefineContract_1.Selected.Value="追加金額",true,false)
+                    Width: =1088
+                    X: =0
+                    Y: =2
+                    ZIndex: =1
+
+                    Label5_44 As label:
+                        Height: =25
+                        OnSelect: =
+                        Text: ="Contract Type"
+                        Width: =151
+                        X: =27
+                        Y: =240
+                        ZIndex: =14
+
+                    Group2_5 As group:
+                        Height: =5
+                        Width: =5
+                        X: =40
+                        Y: =40
+                        ZIndex: =14
+
+                        ComboBox2_19 As combobox:
+                            DisplayFields: =["Title"]
+                            Height: =42
+                            IsSearchable: =false
+                            Items: =VendorName
+                            OnSelect: =
+                            SearchFields: =["Title"]
+                            SearchItems: =[]
+                            Width: =234
+                            X: =27
+                            Y: =136
+                            ZIndex: =2
+
+                        Label5_42 As label:
+                            Height: =25
+                            OnSelect: =
+                            Text: ="Name"
+                            Width: =151
+                            X: =27
+                            Y: =102
+                            ZIndex: =3
+
+                        Label5_43 As label:
+                            Height: =23
+                            OnSelect: =
+                            Text: ="Number"
+                            Width: =128
+                            X: =381
+                            Y: =106
+                            ZIndex: =4
+
+                        ComboBox2_20 As combobox:
+                            DisplayFields: =["Title"]
+                            Height: =41
+                            IsSearchable: =false
+                            Items: =VendorNum
+                            OnSelect: =
+                            SearchFields: =["Title"]
+                            SearchItems: =[]
+                            Width: =211
+                            X: =381
+                            Y: =136
+                            ZIndex: =5
+
+                        Label4_21 As label:
+                            FontWeight: =FontWeight.Bold
+                            Height: =49
+                            OnSelect: =
+                            Size: =16
+                            Text: ="Contract"
+                            Underline: =true
+                            Width: =434
+                            X: =21
+                            Y: =191
+                            ZIndex: =6
+
+                        Label5_46 As label:
+                            Height: =25
+                            OnSelect: =
+                            Text: ="Name"
+                            Width: =103
+                            X: =27
+                            Y: =320
+                            ZIndex: =7
+
+                        Label5_45 As label:
+                            Height: =38
+                            OnSelect: =
+                            Text: ="Number"
+                            Width: =144
+                            X: =567
+                            Y: =307
+                            ZIndex: =8
+
+                        AppendContractName_1 As dropdown:
+                            Height: =42
+                            Items: =Filter(ContractManagementList,Vendor.Value=ComboBox2_19.Selected.Title && '是主約、附約或追加金額？'.Value = AppendContractType_1.Selected.Title )
+                            OnSelect: =
+                            Width: =482
+                            X: =27
+                            Y: =345
+                            ZIndex: =9
+
+                        AppendContractNum_1 As dropdown:
+                            Height: =42
+                            Items: =Filter(ContractManagementList,Vendor.Value=ComboBox2_19.Selected.Title && '是主約、附約或追加金額？'.Value = AppendContractType_1.Selected.Title)
+                            OnSelect: =
+                            Width: =312
+                            X: =567
+                            Y: =345
+                            ZIndex: =10
+
+                        Label4_20 As label:
+                            FontWeight: =FontWeight.Bold
+                            Height: =43
+                            OnSelect: =
+                            Size: =16
+                            Text: ="Vendor"
+                            Underline: =true
+                            Width: =157
+                            X: =21
+                            Y: =59
+                            ZIndex: =11
+
+                    AppendContractType_1 As dropdown:
+                        Height: =42
+                        Items: =ContractType
+                        OnSelect: =
+                        Width: =482
+                        X: =27
+                        Y: =265
+                        ZIndex: =15
+
+                    Group1_3 As group:
+                        Height: =5
+                        Width: =5
+                        X: =40
+                        Y: =40
+                        ZIndex: =15
+
+                        Rectangle9_3 As rectangle:
+                            Fill: =RGBA(230, 230, 230, 1)
+                            Height: =450
+                            Width: =1062
+                            ZIndex: =1
+
+                        Title_rec_3 As rectangle:
+                            Fill: =RGBA(0, 121, 187, 1)
+                            Height: =51
+                            Width: =1062
+                            ZIndex: =12
+
+                        Label9_10 As label:
+                            Align: =Align.Center
+                            Color: =RGBA(255, 255, 255, 1)
+                            FontWeight: =FontWeight.Bold
+                            Height: =53
+                            Size: =16
+                            Text: ="Select Contract Appended"
+                            Width: =305
+                            X: =381
+                            ZIndex: =13
+
+                主約_DataCard1_1 As typedDataCard.textualEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="OData__x4e3b__x7d04_"
+                    Default: =ThisItem.主約
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: ="主約"
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =50
+                    MaxLength: =DataSourceInfo([@ContractManagementList], DataSourceInfo.MaxLength, "OData__x4e3b__x7d04_")
+                    Required: =false
+                    Update: =DataCardValue1_1.Text
+                    Visible: =false
+                    Width: =544
+                    X: =0
+                    Y: =3
+                    ZIndex: =1
+
+                    DataCardKey1_1 As label:
+                        AutoHeight: =true
+                        Height: =34
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =60
+                        Y: =15
+                        ZIndex: =1
+
+                    DataCardValue1_1 As text:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: |-
+                            =If(DefineContract_1.Selected.Value="附約",MainContractName_1.SelectedText.'data-ADB4D7A662F548B49FAC2B986E348A1BID',
+                                DefineContract_1.Selected.Value="追加金額" && AppendContractType_1.Selected.Title="主約",AppendContractName_1.Selected.ID,
+                                "")
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        MaxLength: =Parent.MaxLength
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey1_1.Y + DataCardKey1_1.Height + 5
+                        ZIndex: =2
+
+                    ErrorMessage1_1 As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue1_1.Y + DataCardValue1_1.Height
+                        ZIndex: =3
+
+                    StarVisible1_1 As label:
+                        Align: =Align.Center
+                        Height: =DataCardKey1_1.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey1_1.Y
+                        ZIndex: =4
+
+                附約_DataCard1_1 As typedDataCard.textualEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="SubItem"
+                    Default: =ThisItem.附約
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: ="附約"
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =50
+                    MaxLength: =DataSourceInfo([@ContractManagementList], DataSourceInfo.MaxLength, "SubItem")
+                    Required: =false
+                    Update: =DataCardValue2_1.Text
+                    Visible: =false
+                    Width: =544
+                    X: =1
+                    Y: =3
+                    ZIndex: =1
+
+                    DataCardKey2_1 As label:
+                        AutoHeight: =true
+                        Height: =34
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    DataCardValue2_1 As text:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: |-
+                            =If(
+                                DefineContract_1.Selected.Value="追加金額" && AppendContractType_1.Selected.Title="附約",AppendContractName_1.Selected.ID,
+                                "")
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        MaxLength: =Parent.MaxLength
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey2_1.Y + DataCardKey2_1.Height + 5
+                        ZIndex: =2
+
+                    ErrorMessage2_1 As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue2_1.Y + DataCardValue2_1.Height
+                        ZIndex: =3
+
+                    StarVisible2_1 As label:
+                        Align: =Align.Center
+                        Height: =DataCardKey2_1.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey2_1.Y
+                        ZIndex: =4
+
+                Datastream_DataCard1_1 As typedDataCard.textualEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="Datastream"
+                    Default: =AttatchIMG_1.Image
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: ="Datastream"
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =50
+                    MaxLength: =DataSourceInfo([@ContractManagementList], DataSourceInfo.MaxLength, "Datastream")
+                    Required: =false
+                    Update: =true
+                    Visible: =false
+                    Width: =544
+                    X: =0
+                    Y: =10
+                    ZIndex: =1
+
+                    DataCardKey4_1 As label:
+                        AutoHeight: =true
+                        Height: =34
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    DataCardValue4_1 As text:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =AttatchIMG_1.Image
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        MaxLength: =Parent.MaxLength
+                        OnSelect: =
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey4_1.Y + DataCardKey4_1.Height + 5
+                        ZIndex: =2
+
+                    ErrorMessage4_1 As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue4_1.Y + DataCardValue4_1.Height
+                        ZIndex: =3
+
+                    StarVisible4_1 As label:
+                        Align: =Align.Center
+                        Height: =DataCardKey4_1.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey4_1.Y
+                        ZIndex: =4
+
+                ID_DataCard1_1 As typedDataCard.textualViewCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="ID"
+                    Default: =ThisItem.ID
+                    DisplayMode: =DisplayMode.View
+                    DisplayName: ="ID"
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =40
+                    Required: =false
+                    Visible: =false
+                    Width: =544
+                    X: =1
+                    Y: =10
+                    ZIndex: =1
+
+                    DataCardKey3_1 As label:
+                        AutoHeight: =true
+                        Height: =34
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    FilePath As label:
+                        AutoHeight: =true
+                        DisplayMode: =Parent.DisplayMode
+                        Height: =27
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Default
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey3_1.Y + DataCardKey3_1.Height + 5
+                        ZIndex: =2
+
+                FilePath_DataCard1 As typedDataCard.textualEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="FilePath"
+                    Default: =ThisItem.FilePath
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: ="FilePath"
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =50
+                    MaxLength: =DataSourceInfo([@ContractManagementList], DataSourceInfo.MaxLength, "FilePath")
+                    Required: =false
+                    Update: =DataCardValue3.Text
+                    Width: =544
+                    X: =0
+                    Y: =11
+                    ZIndex: =1
+
+                    DataCardKey5 As label:
+                        AutoHeight: =true
+                        Height: =34
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    DataCardValue3 As text:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        MaxLength: =Parent.MaxLength
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey5.Y + DataCardKey5.Height + 5
+                        ZIndex: =2
+
+                    ErrorMessage3 As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue3.Y + DataCardValue3.Height
+                        ZIndex: =3
+
+                    StarVisible3 As label:
+                        Align: =Align.Center
+                        Height: =DataCardKey5.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey5.Y
+                        ZIndex: =4
+
+                "'Compliance Asset Id_DataCard2' As typedDataCard.textualViewCard":
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="ComplianceAssetId"
+                    Default: =ThisItem.ID
+                    DisplayMode: =DisplayMode.View
+                    DisplayName: ="Compliance Asset Id"
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =40
+                    Required: =false
+                    Visible: =true
+                    Width: =544
+                    X: =1
+                    Y: =11
+                    ZIndex: =1
+
+                    DataCardKey10 As label:
+                        AutoHeight: =true
+                        Height: =34
+                        Text: ="ID"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    CMID_txt As label:
+                        AutoHeight: =true
+                        DisplayMode: =Parent.DisplayMode
+                        Height: =27
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Default
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey10.Y + DataCardKey10.Height + 5
+                        ZIndex: =2
+
+                "'是主約、附約或追加金額？_DataCard1_1' As typedDataCard.comboBoxEditCard":
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="OData__x662f__x5426__x662f__x8ffd__x52"
+                    Default: =ThisItem.'是主約、附約或追加金額？'
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: ="是主約、附約或追加金額？"
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =132
+                    Required: =true
+                    Update: =DefineContract_1.Selected
+                    Width: =1088
+                    X: =0
+                    Y: =0
+                    ZIndex: =6
+
+                    DataCardKey34_1 As label:
+                        AutoHeight: =true
+                        FontWeight: =FontWeight.Bold
+                        Height: =34
+                        Size: =16
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    DefineContract_1 As combobox:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DefaultSelectedItems: =Parent.Default
+                        DisplayFields: =["Value"]
+                        DisplayMode: =
+                        Items: =Choices([@ContractManagementList].'是主約、附約或追加金額？')
+                        OnSelect: |-
+                            =Set(dropdownValue,DefineContract_1.Selected.Value);
+                            If(DefineContract_1.Selected.Value="附約",UpdateContext({showSelectContract:true}),false)
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        SearchFields: =["Value"]
+                        SearchItems: =Choices(ContractManagementList.'是主約、附約或追加金額？',DefineContract_1.SearchText)
+                        SelectMultiple: =false
+                        Tooltip: =Parent.DisplayName
+                        Width: =452
+                        X: =30
+                        Y: =DataCardKey34_1.Y + DataCardKey34_1.Height + 5
+                        ZIndex: =2
+
+                    ErrorMessage34_1 As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DefineContract_1.Y + DefineContract_1.Height
+                        ZIndex: =3
+
+                    StarVisible34_1 As label:
+                        Align: =Align.Center
+                        Height: =DataCardKey34_1.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey34_1.Y
+                        ZIndex: =4
+
+                Title_DataCard2_1 As typedDataCard.textualEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="Title"
+                    Default: =ThisItem.Title
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: ="Title"
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =50
+                    MaxLength: =DataSourceInfo([@ContractManagementList], DataSourceInfo.MaxLength, "Title")
+                    Required: =true
+                    Update: =DataCardValue20_1.Text
+                    Width: =544
+                    X: =0
+                    Y: =4
+                    ZIndex: =6
+
+                    DataCardKey20_1 As label:
+                        AutoHeight: =true
+                        Height: =34
+                        Text: ="Project Number"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    DataCardValue20_1 As text:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        MaxLength: =Parent.MaxLength
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey20_1.Y + DataCardKey20_1.Height + 5
+                        ZIndex: =2
+
+                    ErrorMessage20_1 As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue20_1.Y + DataCardValue20_1.Height
+                        ZIndex: =3
+
+                    StarVisible20_1 As label:
+                        Align: =Align.Center
+                        Height: =DataCardKey20_1.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey20_1.Y
+                        ZIndex: =4
+
+                ProjectName_DataCard2_1 As typedDataCard.textualEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="ProjectName"
+                    Default: =ThisItem.ProjectName
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: ="ProjectName"
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =99
+                    MaxLength: =DataSourceInfo([@ContractManagementList], DataSourceInfo.MaxLength, "ProjectName")
+                    Required: =false
+                    Update: =ProjectName_1.Text
+                    Width: =544
+                    X: =1
+                    Y: =4
+                    ZIndex: =6
+
+                    DataCardKey31_1 As label:
+                        AutoHeight: =true
+                        Height: =34
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    ProjectName_1 As text:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        MaxLength: =Parent.MaxLength
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey31_1.Y + DataCardKey31_1.Height + 5
+                        ZIndex: =2
+
+                    ErrorMessage31_1 As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =ProjectName_1.Y + ProjectName_1.Height
+                        ZIndex: =3
+
+                    StarVisible31_1 As label:
+                        Align: =Align.Center
+                        Height: =DataCardKey31_1.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey31_1.Y
+                        ZIndex: =4
+
+                簽約主體_DataCard2_1 As typedDataCard.textualEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="OData__x7c3d__x7d04__x4e3b__x9ad4_"
+                    Default: =ThisItem.簽約主體
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: ="簽約主體"
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =50
+                    MaxLength: =DataSourceInfo([@ContractManagementList], DataSourceInfo.MaxLength, "OData__x7c3d__x7d04__x4e3b__x9ad4_")
+                    Required: =true
+                    Update: =DataCardValue21_1.Text
+                    Width: =544
+                    X: =0
+                    Y: =5
+                    ZIndex: =6
+
+                    DataCardKey21_1 As label:
+                        AutoHeight: =true
+                        Height: =34
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    DataCardValue21_1 As text:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        MaxLength: =Parent.MaxLength
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey21_1.Y + DataCardKey21_1.Height + 5
+                        ZIndex: =2
+
+                    ErrorMessage21_1 As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue21_1.Y + DataCardValue21_1.Height
+                        ZIndex: =3
+
+                    StarVisible21_1 As label:
+                        Align: =Align.Center
+                        Height: =DataCardKey21_1.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey21_1.Y
+                        ZIndex: =4
+
+                我方簽約_DataCard2_1 As typedDataCard.textualEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="OData__x6211__x65b9__x7c3d__x7d04_"
+                    Default: =ThisItem.我方簽約
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: ="我方簽約"
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =50
+                    MaxLength: =DataSourceInfo([@ContractManagementList], DataSourceInfo.MaxLength, "OData__x6211__x65b9__x7c3d__x7d04_")
+                    Required: =false
+                    Update: =DataCardValue23_1.Text
+                    Width: =544
+                    X: =1
+                    Y: =5
+                    ZIndex: =6
+
+                    DataCardKey23_1 As label:
+                        AutoHeight: =true
+                        Height: =34
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    DataCardValue23_1 As text:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        MaxLength: =Parent.MaxLength
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey23_1.Y + DataCardKey23_1.Height + 5
+                        ZIndex: =2
+
+                    ErrorMessage23_1 As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue23_1.Y + DataCardValue23_1.Height
+                        ZIndex: =3
+
+                    StarVisible23_1 As label:
+                        Align: =Align.Center
+                        Height: =DataCardKey23_1.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey23_1.Y
+                        ZIndex: =4
+
+                職級_DataCard2_1 As typedDataCard.textualEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="OData__x8077__x7d1a_"
+                    Default: =ThisItem.職級
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: ="職級"
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =50
+                    MaxLength: =DataSourceInfo([@ContractManagementList], DataSourceInfo.MaxLength, "OData__x8077__x7d1a_")
+                    Required: =false
+                    Update: =DataCardValue24_1.Text
+                    Width: =544
+                    X: =0
+                    Y: =6
+                    ZIndex: =6
+
+                    DataCardKey24_1 As label:
+                        AutoHeight: =true
+                        Height: =34
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =24
+                        ZIndex: =1
+
+                    DataCardValue24_1 As text:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        MaxLength: =Parent.MaxLength
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey24_1.Y + DataCardKey24_1.Height + 5
+                        ZIndex: =2
+
+                    ErrorMessage24_1 As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue24_1.Y + DataCardValue24_1.Height
+                        ZIndex: =3
+
+                    StarVisible24_1 As label:
+                        Align: =Align.Center
+                        Height: =DataCardKey24_1.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey24_1.Y
+                        ZIndex: =4
+
+                對方簽約人_DataCard2_1 As typedDataCard.textualEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="OData__x5c0d__x65b9__x7c3d__x7d04__x4e"
+                    Default: =ThisItem.對方簽約人
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: ="對方簽約人"
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =50
+                    MaxLength: =DataSourceInfo([@ContractManagementList], DataSourceInfo.MaxLength, "OData__x5c0d__x65b9__x7c3d__x7d04__x4e")
+                    Required: =false
+                    Update: =DataCardValue25_1.Text
+                    Width: =544
+                    X: =1
+                    Y: =6
+                    ZIndex: =6
+
+                    DataCardKey25_1 As label:
+                        AutoHeight: =true
+                        Height: =34
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    DataCardValue25_1 As text:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        MaxLength: =Parent.MaxLength
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey25_1.Y + DataCardKey25_1.Height + 5
+                        ZIndex: =2
+
+                    ErrorMessage25_1 As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue25_1.Y + DataCardValue25_1.Height
+                        ZIndex: =3
+
+                    StarVisible25_1 As label:
+                        Align: =Align.Center
+                        Height: =DataCardKey25_1.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey25_1.Y
+                        ZIndex: =4
+
+                Amount_DataCard2_1 As typedDataCard.numberEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="Amount"
+                    Default: =ThisItem.Amount
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: ="Amount"
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =126
+                    Required: =true
+                    Update: =Value(DataCardValue29_1.Text)
+                    Width: =544
+                    X: =0
+                    Y: =7
+                    ZIndex: =6
+
+                    DataCardKey29_1 As label:
+                        AutoHeight: =true
+                        Height: =34
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    DataCardValue29_1 As text:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        Format: =TextFormat.Number
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey29_1.Y + DataCardKey29_1.Height + 5
+                        ZIndex: =2
+
+                    ErrorMessage29_1 As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue29_1.Y + DataCardValue29_1.Height
+                        ZIndex: =3
+
+                    StarVisible29_1 As label:
+                        Align: =Align.Center
+                        Height: =DataCardKey29_1.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey29_1.Y
+                        ZIndex: =4
+
+                Currency_DataCard2_1 As typedDataCard.comboBoxEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="Currency"
+                    Default: =ThisItem.Currency
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: ="Currency"
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =50
+                    Required: =true
+                    Update: =DataCardValue28_1.Selected
+                    Width: =544
+                    X: =1
+                    Y: =7
+                    ZIndex: =6
+
+                    DataCardKey28_1 As label:
+                        AutoHeight: =true
+                        Height: =34
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    DataCardValue28_1 As combobox:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DefaultSelectedItems: =Parent.Default
+                        DisplayFields: =["Value"]
+                        DisplayMode: =Parent.DisplayMode
+                        Items: =Choices([@ContractManagementList].Currency)
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        SearchFields: =["Value"]
+                        SearchItems: =Choices(ContractManagementList.Currency,DataCardValue28_1.SearchText)
+                        SelectMultiple: =false
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey28_1.Y + DataCardKey28_1.Height + 5
+                        ZIndex: =2
+
+                    ErrorMessage28_1 As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue28_1.Y + DataCardValue28_1.Height
+                        ZIndex: =3
+
+                    StarVisible28_1 As label:
+                        Align: =Align.Center
+                        Height: =DataCardKey28_1.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey28_1.Y
+                        ZIndex: =4
+
+                "'Sign-inDate_DataCard2_1' As typedDataCard.dateEditCard":
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="Sign_x002d_inDate"
+                    Default: =ThisItem.'Sign-inDate'
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: ="Sign-inDate"
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =50
+                    Required: =false
+                    Update: =DataCardValue27_1.SelectedDate
+                    Width: =544
+                    X: =0
+                    Y: =8
+                    ZIndex: =6
+
+                    DataCardKey27_1 As label:
+                        AutoHeight: =true
+                        Height: =34
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    DataCardValue27_1 As datepicker:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        DefaultDate: =Parent.Default
+                        DisplayMode: =Parent.DisplayMode
+                        EndYear: =Year(Today())+100
+                        IsEditable: =true
+                        PaddingBottom: =0
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        StartYear: =1899
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey27_1.Y + DataCardKey27_1.Height + 5
+                        ZIndex: =2
+
+                    ErrorMessage27_1 As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue27_1.Y + DataCardValue27_1.Height
+                        ZIndex: =3
+
+                    StarVisible27_1 As label:
+                        Align: =Align.Center
+                        Height: =DataCardKey27_1.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey27_1.Y
+                        ZIndex: =4
+
+                DocumentDate_DataCard2_1 As typedDataCard.dateEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="DocumentDate"
+                    Default: =
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: ="DocumentDate"
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =50
+                    Required: =true
+                    Update: =DataCardValue26_1.SelectedDate
+                    Width: =544
+                    X: =1
+                    Y: =8
+                    ZIndex: =6
+
+                    DataCardKey26_1 As label:
+                        AutoHeight: =true
+                        Height: =34
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    DataCardValue26_1 As datepicker:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        DefaultDate: =Parent.Default
+                        DisplayMode: =Parent.DisplayMode
+                        EndYear: =Year(Today())+100
+                        IsEditable: =true
+                        PaddingBottom: =0
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        StartYear: =1899
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey26_1.Y + DataCardKey26_1.Height + 5
+                        ZIndex: =2
+
+                    ErrorMessage26_1 As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue26_1.Y + DataCardValue26_1.Height
+                        ZIndex: =3
+
+                    StarVisible26_1 As label:
+                        Align: =Align.Center
+                        Height: =DataCardKey26_1.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey26_1.Y
+                        ZIndex: =4
+
+                ContractType_DataCard2_1 As typedDataCard.comboBoxEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="ContractType"
+                    Default: =ThisItem.ContractType
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: ="ContractType"
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =50
+                    Required: =false
+                    Update: =DataCardValue30_1.Selected
+                    Width: =544
+                    X: =0
+                    Y: =9
+                    ZIndex: =6
+
+                    DataCardKey30_1 As label:
+                        AutoHeight: =true
+                        Height: =34
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    DataCardValue30_1 As combobox:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DefaultSelectedItems: =Parent.Default
+                        DisplayFields: =["Value"]
+                        DisplayMode: =Parent.DisplayMode
+                        Items: =Choices([@ContractManagementList].ContractType)
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        SearchFields: =["Value"]
+                        SearchItems: =Choices(ContractManagementList.ContractType,DataCardValue30_1.SearchText)
+                        SelectMultiple: =false
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey30_1.Y + DataCardKey30_1.Height + 5
+                        ZIndex: =2
+
+                    ErrorMessage30_1 As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue30_1.Y + DataCardValue30_1.Height
+                        ZIndex: =3
+
+                    StarVisible30_1 As label:
+                        Align: =Align.Center
+                        Height: =DataCardKey30_1.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey30_1.Y
+                        ZIndex: =4
+
+                Vendor_DataCard2_1 As typedDataCard.comboBoxEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="Vendor"
+                    Default: =ThisItem.Vendor
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: ="Vendor"
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =50
+                    Required: =true
+                    Update: =DataCardValue22_1.Selected
+                    Width: =544
+                    X: =1
+                    Y: =9
+                    ZIndex: =6
+
+                    DataCardKey22_1 As label:
+                        AutoHeight: =true
+                        Height: =34
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    DataCardValue22_1 As combobox:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DefaultSelectedItems: =Parent.Default
+                        DisplayFields: =["Value"]
+                        DisplayMode: =Parent.DisplayMode
+                        IsSearchable: =false
+                        Items: =Choices([@ContractManagementList].Vendor)
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        SearchFields: =["Value"]
+                        SearchItems: =[]
+                        SelectMultiple: =false
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey22_1.Y + DataCardKey22_1.Height + 5
+                        ZIndex: =2
+
+                    ErrorMessage22_1 As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue22_1.Y + DataCardValue22_1.Height
+                        ZIndex: =3
+
+                    StarVisible22_1 As label:
+                        Align: =Align.Center
+                        Height: =DataCardKey22_1.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey22_1.Y
+                        ZIndex: =4
+
+                追加原因_DataCard1_1 As typedDataCard.textualEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="OData__x8ffd__x52a0__x539f__x56e0_"
+                    Default: =ThisItem.追加原因
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: ="追加原因"
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =50
+                    MaxLength: =DataSourceInfo([@ContractManagementList], DataSourceInfo.MaxLength, "OData__x8ffd__x52a0__x539f__x56e0_")
+                    Required: =false
+                    Update: =DataCardValue37_1.Text
+                    Visible: =If(DefineContract_1.Selected.Value="追加金額",true,false)
+                    Width: =544
+                    X: =0
+                    Y: =12
+                    ZIndex: =6
+
+                    DataCardKey37_1 As label:
+                        AutoHeight: =true
+                        Height: =34
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    DataCardValue37_1 As text:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        MaxLength: =Parent.MaxLength
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey37_1.Y + DataCardKey37_1.Height + 5
+                        ZIndex: =2
+
+                    ErrorMessage37_1 As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue37_1.Y + DataCardValue37_1.Height
+                        ZIndex: =3
+
+                    StarVisible37_1 As label:
+                        Align: =Align.Center
+                        Height: =DataCardKey37_1.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey37_1.Y
+                        ZIndex: =4
+
+                Button As typedDataCard.attachmentsEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="{Attachments}"
+                    Default: =ThisItem.附件
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: ="附件"
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =105
+                    Required: =false
+                    Update: =AttatchmentCTL_1.Attachments
+                    Visible: =false
+                    Width: =544
+                    X: =1
+                    Y: =12
+                    ZIndex: =6
+
+                    DataCardKey38_1 As label:
+                        AutoHeight: =true
+                        Height: =34
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    AttatchmentCTL_1 As attachments:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        DisplayMode: =Parent.DisplayMode
+                        Height: =103
+                        IsInDataCard: =true
+                        Items: =Parent.Default
+                        MaxAttachments: =1
+                        OnAddFile: =
+                        PaddingBottom: =5
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        PaddingRight: =5
+                        PaddingTop: =5
+                        Tooltip: =Parent.DisplayName
+                        Width: =472
+                        X: =30
+                        Y: =DataCardKey38_1.Y + DataCardKey38_1.Height + 5
+                        ZIndex: =2
+
+                    ErrorMessage38_1 As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =AttatchmentCTL_1.Y + AttatchmentCTL_1.Height
+                        ZIndex: =3
+
+                    StarVisible38_1 As label:
+                        Align: =Align.Center
+                        Height: =DataCardKey38_1.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey38_1.Y
+                        ZIndex: =4
+
+                    AttatchIMG_1 As image:
+                        Image: =Last(AttatchmentCTL_1.Attachments).Value
+                        X: =353
+                        Y: =51
+                        ZIndex: =5
+
+                    "'Update Information of Form' As button":
+                        Fill: =RGBA(127, 178, 57, 1)
+                        Height: =67
+                        OnSelect: =SubmitForm(ContractForm_1)
+                        Text: ="Update Information of Form"
+                        Width: =213
+                        X: =40
+                        Y: =40
+                        ZIndex: =6
+
+        PreviousFile As dataCard.blankCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =280
+            Width: =1139
+            X: =0
+            Y: =1
+            ZIndex: =3
+
+            Rectangle5_1 As rectangle:
+                Fill: =RGBA(230, 230, 230, 1)
+                Height: =280
+                Width: =1139
+                ZIndex: =1
+
+            Rectangle3 As rectangle:
+                Fill: =RGBA(0, 0, 0, 1)
+                Height: =41
+                Width: =308
+                X: =54
+                Y: =39
+                ZIndex: =2
+
+            Label7 As label:
+                Align: =Align.Center
+                Color: =RGBA(255, 255, 255, 1)
+                FontWeight: =FontWeight.Bold
+                Size: =16
+                Text: ="Previous File"
+                Width: =237
+                X: =89
+                Y: =40
+                ZIndex: =3
+
+            Gal_BG As rectangle:
+                BorderColor: =RGBA(0, 0, 0, 1)
+                BorderThickness: =1
+                Fill: =RGBA(255, 255, 255, 1)
+                Height: =141
+                Width: =640
+                X: =54
+                Y: =85
+                ZIndex: =5
+
+            "PreviousFile_Gal As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver4.0'":
+                Height: =141
+                Items: |
+                    =// If info.ID = File.infoID , show FileName
+                    //從Document library 抓
+                    Filter(ContractFiles,CMID=CMID_txt.Text && DeletionFlag=false)
+                Layout: =Layout.Vertical
+                TemplatePadding: =0
+                TemplateSize: =53
+                X: =54
+                Y: =85
+                ZIndex: =6
+
+                Image3 As image:
+                    Height: =60
+                    Image: =
+                    OnSelect: =Select(Parent)
+                    Visible: =false
+                    Width: =71
+                    X: =41
+                    Y: =16
+                    ZIndex: =1
+
+                Title3 As label:
+                    Height: =Self.Size * 1.8
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =14
+                    Text: =ThisItem.FileName
+                    VerticalAlign: =VerticalAlign.Top
+                    Width: =Parent.TemplateWidth - Image3.Width - 104
+                    X: =41
+                    Y: =16
+                    ZIndex: =2
+
+                Separator3 As rectangle:
+                    Height: =1
+                    OnSelect: =Select(Parent)
+                    Width: =Parent.TemplateWidth
+                    Y: =Parent.TemplateHeight - 1
+                    ZIndex: =5
+
+                Delete As icon.Cancel:
+                    Height: =27
+                    Icon: =Icon.Cancel
+                    OnSelect: |
+                        =//deletion flag = true
+                        Patch(ContractFiles,First(Filter(ContractFiles,CMID=CMID_txt.Text && FileName=Title3.Text)),{DeletionFlag:true});
+                        
+                        //alert to ensure deletion
+                        Notify("Previous File already be deleted!",NotificationType.Information);
+                        
+                        //ForAll(FileGallery_2.AllItems,Collect(ColFileEditGallery,{Title:FileNameID_2.Text,Datafile:FileIMG_2.Image,FileEditPath:varUpdateFilePath}));
+                        //Refresh Gallery
+                        ForAll(PreviousFile_Gal.AllItems,Collect(ColPreviousFile_Gal,{FileName:Title3.Text}));
+                        //Set(refreshGal,Filter(ContractFiles,CMID=CMID_txt.Text && DeletionFlag=false));
+                    Width: =27
+                    X: =574
+                    Y: =14
+                    ZIndex: =6
+
+                Label8 As label:
+                    OnSelect: =Select(Parent)
+                    Text: =
+                    X: =375
+                    Y: =13
+                    ZIndex: =7
+
+            Button1 As button:
+                Fill: =RGBA(127, 178, 57, 1)
+                Height: =52
+                OnSelect: =SubmitForm(ContractForm_1)
+                Text: ="Update Information of Form"
+                Width: =310
+                X: =752
+                Y: =129
+                ZIndex: =7
+
+        UploadNewFile As dataCard.blankCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =273
+            Visible: =true
+            Width: =1139
+            X: =0
+            Y: =2
+            ZIndex: =4
+
+            Rectangle5_2 As rectangle:
+                Fill: =RGBA(230, 230, 230, 1)
+                Height: =364
+                Width: =1139
+                ZIndex: =1
+
+            FileCTL_2 As attachments:
+                BorderColor: =
+                DisplayMode: =
+                Height: =115
+                IsInDataCard: =true
+                Items: =
+                MaxAttachments: =5
+                OnAddFile: =
+                PaddingBottom: =5
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PaddingRight: =5
+                PaddingTop: =5
+                Tooltip: =
+                Width: =319
+                X: =59
+                Y: =81
+                ZIndex: =2
+
+            "FileGallery_2 As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver4.0'":
+                Height: =302
+                Items: =FileCTL_2.Attachments
+                Layout: =Layout.Vertical
+                TemplatePadding: =0
+                TemplateSize: =302
+                Width: =372
+                X: =412
+                Y: =39
+                ZIndex: =3
+
+                FileIMG_2 As image:
+                    Height: =36
+                    Image: =Last(FileCTL_2.Attachments).Value
+                    OnSelect: =Select(Parent)
+                    Visible: =false
+                    Width: =54
+                    X: =27
+                    Y: =21
+                    ZIndex: =1
+
+                FileNameID_2 As label:
+                    Height: =67
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =14
+                    Text: |-
+                        =//改成更改檔案的ID
+                        CMID_txt.Text & "_" & ThisItem.Name
+                    VerticalAlign: =VerticalAlign.Top
+                    Width: =511
+                    Y: =44
+                    ZIndex: =2
+
+                FileBool_2 As label:
+                    OnSelect: =Select(Parent)
+                    Text: =FileIMG_2.Image
+                    Visible: =false
+                    X: =81
+                    Y: =9
+                    ZIndex: =5
+
+                Label10_2 As label:
+                    FontWeight: =FontWeight.Bold
+                    OnSelect: =Select(Parent)
+                    Size: =16
+                    Text: |-
+                        ="Update File Name :"
+                    Width: =231
+                    ZIndex: =6
+
+                Label10_3 As label:
+                    FontWeight: =FontWeight.Bold
+                    OnSelect: =Select(Parent)
+                    Size: =16
+                    Text: |-
+                        ="Previous File Path :"
+                    Width: =231
+                    Y: =111
+                    ZIndex: =7
+
+                Label11_1 As label:
+                    Height: =69
+                    OnSelect: =Select(Parent)
+                    Text: =varUpdateFilePath
+                    Width: =372
+                    Y: =151
+                    ZIndex: =8
+
+            "'Update New File' As button":
+                Fill: =RGBA(127, 178, 57, 1)
+                Height: =45
+                OnSelect: |-
+                    =Clear(ColFileEditGallery);
+                    Clear(ColFileGallery_EditDoc);
+                    //上傳至同一資料夾+現在的檔名
+                    //去除檔名
+                    
+                    //FilePath string split
+                    Set(varFP1,First(Split(DataCardValue3.Text,",")).Result);
+                    Set(varUpdateFilePath,
+                    Concat(FirstN(Split(varFP1,"/").Result,CountRows(Split(varFP1,"/").Result)-1),Result & "/")
+                    );
+                    
+                    
+                    //Upload to folder : create collection & variable
+                    ForAll(FileGallery_2.AllItems,Collect(ColFileEditGallery,{Title:FileNameID_2.Text,Datafile:FileIMG_2.Image,FileEditPath:varUpdateFilePath}));
+                    Set(varEditInput,JSON(ColFileEditGallery,JSONFormat.IncludeBinaryData));
+                    
+                    //Upload to document library : create collection & variable
+                    ForAll(
+                        FileGallery_2.AllItems,
+                        Collect(
+                            ColFileGallery_EditDoc,
+                            {
+                                Title: FileNameID_2.Text,
+                                Datafile: FileIMG_2.Image,
+                                FGUID: GUID(),
+                                CMID:CMID_txt.Text,
+                                ProjectNumber:DataCardValue20_1.Text
+                            }
+                        )
+                    );
+                    
+                    Set(
+                        varInPut_EditDoc,
+                        JSON(
+                            ColFileGallery_EditDoc,
+                            JSONFormat.IncludeBinaryData
+                        )
+                    );
+                    
+                    
+                    //If(IsBlank(FileBool_2.Text),Notify("You must attatch a file!",NotificationType.Error),SubmitForm(ContractForm_1));
+                    
+                    
+                    //* Upload files to document library
+                    
+                    
+                    //* Upload File to Folders
+                    Set(UploadToFolder_edit,EditFile_ToFolder.Run(varEditInput));
+                    If(UploadToFolder_edit.successmes="true",Notify("The File Submission to Folders has Succeeded.",NotificationType.Success),Notify("The File Submission to Folders has Failed.",NotificationType.Error));
+                    
+                    
+                    //* Upload file to Document library
+                    Set(UploadToDoc_edit,EditFile_ToDoc.Run(varInPut_EditDoc));
+                    If(UploadToDoc_edit.successmes="true",Notify("The File Submission to Document Library has Succeeded.",NotificationType.Success),Notify("The File Submission to Document Library has Failed.",NotificationType.Error));
+                    
+                    Refresh(ContractFiles);
+                    Reset(FileCTL_2);
+                Text: ="Update New File"
+                Width: =191
+                X: =816
+                Y: =116
+                ZIndex: =6
+
+            CoverPreviousFile_Txt_1 As group:
+                Height: =5
+                Width: =5
+                X: =60
+                Y: =60
+                ZIndex: =7
+
+                Rectangle10_1 As rectangle:
+                    Fill: =RGBA(0, 0, 0, 1)
+                    Height: =36
+                    Width: =320
+                    X: =59
+                    Y: =40
+                    ZIndex: =4
+
+                Label8_1 As label:
+                    Align: =Align.Center
+                    Color: =RGBA(255, 255, 255, 1)
+                    FontWeight: =FontWeight.Bold
+                    Height: =36
+                    Size: =16
+                    Text: ="Upload New File"
+                    Width: =290
+                    X: =74
+                    Y: =40
+                    ZIndex: =5
+
+            Label5_1 As label:
+                Height: =90
+                Text: =
+                Width: =288
+                X: =44
+                Y: =230
+                ZIndex: =8
+

@@ -1,0 +1,9 @@
+[
+  {
+    "AddinConnectorId": "92d9cadf-727d-4b80-ba3a-c820d790aacd",
+    "AddinId": "6d1f157d-95bf-406d-b65d-cfd3240f724e",
+    "Name": "SCSExportExcelMethod",
+    "ServiceKind": "AddinWadl",
+    "Type": "ServiceInfo"
+  }
+]

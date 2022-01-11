@@ -1,0 +1,2248 @@
+SearchContract As screen:
+    OnVisible: |-
+        =Concurrent(
+        UpdateContext({SC_valid_startDate_msg:""}),
+        UpdateContext({SC_valid_endDate_msg:""}),
+        UpdateContext({var_duration:400}),
+        UpdateContext({var_Click:0}),
+        UpdateContext({var_NewItem:""}),
+        UpdateContext({const_mainContract: "主約"}),
+        UpdateContext({const_subContract: "附約"}),
+        UpdateContext({const_suppleB: "追加金額"}),
+        UpdateContext({const_Currency_NTD: "NTD"}),
+        UpdateContext({const_Currency_USD: "USD"}),
+        UpdateContext({const_API_Path:"appres://datasources/ContractFiles/table/ac721157-e8e0-414c-902e-5effc3da96cd/rows/6/reference/https:%2F%2Fasia-001.azure-apim.net%2Fapim%2Fsharepointonline%2Ff5f59dba7d124245b15af36dc5e6479c%2Fdatasets%2Fhttps%25253a%25252f%25252fchangchuncorporation.sharepoint.com%25252fsites%25252fBPM_DEV2%25252fdev_bpmsub%25252frdlab%2FGetFileContentByPath%3Fpath=%252f"}),
+        UpdateContext({msg_valid_afterToday: "Selected date cannot be after Today"}),
+        UpdateContext({msg_valid_afterEndDate: "Selected date cannot be after End Date"}),
+        UpdateContext({msg_valid_beforeStartDate: "Selected date cannot be befor Start Date"}),
+        UpdateContext({msg_updateSuccess: "Upadte Success"}),
+        UpdateContext({msg_deleteSuccess: "Delete Success"}),
+        UpdateContext({Main_AM: 0}),
+        UpdateContext({var_SCS_DV_projectName:""}),
+        UpdateContext({var_SCS_DV_contractDefine:""}),
+        UpdateContext({var_SCS_DV_CMID:""}),
+        UpdateContext({msg_loading: "Exporting applications..."}),
+        UpdateContext({msg_exportError: "Exporting failed, please contact related department."}),
+        /* SearchContractScreen Variable  */
+        ClearCollect(SearchContractCollect, ContractManagementList),
+        ClearCollect(SBContractCollect, ContractManagementList),
+        ClearCollect(PopContractCollect,ContractManagementList),
+        ClearCollect(DVCollect,ContractFiles),
+        UpdateContext({SB_DT_EditBool:false}),
+        UpdateContext({Bool_DV_Visible:false})
+        )
+
+    SCS_Background_1 As rectangle:
+        BorderColor: =RGBA(255, 255, 255, 1)
+        BorderThickness: =2
+        Fill: =RGBA(237, 237, 237, 0.59)
+        Height: =684
+        Width: =1129
+        X: =232
+        Y: =82
+        ZIndex: =1
+
+    SCS_ContractMaster As fluidGrid.fluidGridWithBlankCard:
+        BorderThickness: =0
+        Height: =498
+        Width: =1128
+        X: =235
+        Y: =270
+        ZIndex: =2
+
+        SCS_CM_MainSubContract_Card As dataCard.blankCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =313
+            Width: =1128
+            X: =0
+            Y: =1
+            ZIndex: =2
+
+            SCS_SearchContract_DT As dataTable.datatable:
+                BorderStyle: =BorderStyle.Solid
+                DisplayMode: =DisplayMode.Edit
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =302
+                Items: |-
+                    =If(
+                        SC_valid_startDate_msg = "" && SC_valid_endDate_msg = "",
+                        SortByColumns(
+                            AddColumns(
+                                Filter(
+                                    SearchContractCollect As DS,
+                                    SC_HD_text_ProjectName_1.Text in Lower(DS.ProjectName),
+                                    SC_HD_text_ProjectNumber_1.Text in Lower(DS.Title),
+                                    DS.'是主約、附約或追加金額？'.Value <> const_suppleB,
+                                    DS.DocumentDate >= SC_HD_date_StartDate_1,
+                                    DS.DocumentDate <= SC_HD_date_EndDate_1,
+                                    If(
+                                        CountRows(SC_HD_comboBox_Vendor_1.SelectedItems) > 0,
+                                        DS.Vendor.Value in SC_HD_comboBox_Vendor_1.SelectedItems.Result,
+                                        1 = 1
+                                    ),
+                                    If(
+                                        CountRows(SC_HD_comboBox_ContactGroup_1.SelectedItems) > 0,
+                                        DS.簽約主體 in SC_HD_comboBox_ContactGroup_1.SelectedItems.Result,
+                                        1 = 1
+                                    ),               
+                                Text(DS.deletionFlag) = Text(false)
+                                ),
+                                "Vendor_text",
+                                Vendor.Value,
+                                "Title_contratType",
+                                '是主約、附約或追加金額？'.Value,
+                                "contract_Group",
+                                簽約主體,
+                                "Currency_text",
+                                Currency.Value,
+                                "Part_A_Signer",
+                                我方簽約,
+                                "Part_B_Signer",
+                                對方簽約人,
+                                "sign-in Date",
+                                'Sign-inDate',
+                                "Reason_T",
+                                追加原因,
+                                "Belong_Main",
+                                主約,
+                                "Contract_type",
+                                ContractType.Value,
+                                "sub_rank",
+                                附約,
+                                "rank",
+                                If(
+                                    '是主約、附約或追加金額？'.Value = "主約",
+                                    1,
+                                    '是主約、附約或追加金額？'.Value = "附約",
+                                    2
+                                )
+                            ),
+                            "contract_Group",
+                            Ascending,
+                            "Vendor_text",
+                            Ascending,
+                            "rank",
+                            Ascending,
+                            "DocumentDate",
+                            Descending
+                        )
+                    )
+                Width: =1104
+                X: =0
+                Y: =10
+                ZIndex: =1
+
+                SC_Amount_Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="Budget"
+                    FieldName: ="Amount"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    OnSelect: |-
+                        =If(
+                            !var_popVisble,
+                            UpdateContext({var_Text: "-"});
+                            UpdateContext({var_popVisble: false});
+                            Switch(
+                                var_Click,
+                                0,
+                                UpdateContext({var_NewItem: Text(SCS_SearchContract_DT.Selected.ID)});
+                                UpdateContext({var_Click: 1});
+                                UpdateContext({var_TimerStart: false});
+                                UpdateContext({var_TimerStart: true}),
+                                1,
+                                If(
+                                    var_NewItem = Text(SCS_SearchContract_DT.Selected.ID),
+                                    UpdateContext({var_Click: 2}),
+                                    UpdateContext({var_Click: 1})
+                                ),
+                                2,
+                                If(
+                                    var_NewItem = Text(SCS_SearchContract_DT.Selected.ID),
+                                    UpdateContext({var_Click: 2}),
+                                    UpdateContext({var_Click: 1})
+                                )
+                            )
+                        )
+                    Order: =15
+                    Text: |-
+                        =Text(Value(ThisItem.Amount, "en-US"), "#,###", "en-US")
+                    Width: =100
+                    X: =460
+                    Y: =0
+                    ZIndex: =15
+
+                SC_contract_Group_Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="Part A Company"
+                    FieldName: ="contract_Group"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    OnSelect: |-
+                        =If(
+                            !var_popVisble,
+                            UpdateContext({var_Text: "-"});
+                            UpdateContext({var_popVisble: false});
+                            Switch(
+                                var_Click,
+                                0,
+                                UpdateContext({var_NewItem: Text(SCS_SearchContract_DT.Selected.ID)});
+                                UpdateContext({var_Click: 1});
+                                UpdateContext({var_TimerStart: false});
+                                UpdateContext({var_TimerStart: true}),
+                                1,
+                                If(
+                                    var_NewItem = Text(SCS_SearchContract_DT.Selected.ID),
+                                    UpdateContext({var_Click: 2}),
+                                    UpdateContext({var_Click: 1})
+                                ),
+                                2,
+                                If(
+                                    var_NewItem = Text(SCS_SearchContract_DT.Selected.ID),
+                                    UpdateContext({var_Click: 2}),
+                                    UpdateContext({var_Click: 1})
+                                )
+                            )
+                        )
+                    Order: =1
+                    Text: =ThisItem.contract_Group
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =17
+
+                SC_Contract_type_Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="Contract Type"
+                    FieldName: ="Contract_type"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    OnSelect: |-
+                        =If(
+                            !var_popVisble,
+                            UpdateContext({var_Text: "-"});
+                            UpdateContext({var_popVisble: false});
+                            Switch(
+                                var_Click,
+                                0,
+                                UpdateContext({var_NewItem: Text(SCS_SearchContract_DT.Selected.ID)});
+                                UpdateContext({var_Click: 1});
+                                UpdateContext({var_TimerStart: false});
+                                UpdateContext({var_TimerStart: true}),
+                                1,
+                                If(
+                                    var_NewItem = Text(SCS_SearchContract_DT.Selected.ID),
+                                    UpdateContext({var_Click: 2}),
+                                    UpdateContext({var_Click: 1})
+                                ),
+                                2,
+                                If(
+                                    var_NewItem = Text(SCS_SearchContract_DT.Selected.ID),
+                                    UpdateContext({var_Click: 2}),
+                                    UpdateContext({var_Click: 1})
+                                )
+                            )
+                        )
+                    Order: =16
+                    Text: =ThisItem.Contract_type
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =18
+
+                SC_Currency_Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="Currency"
+                    FieldName: ="Currency"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    OnSelect: |-
+                        =If(
+                            !var_popVisble,
+                            UpdateContext({var_Text: "-"});
+                            UpdateContext({var_popVisble: false});
+                            Switch(
+                                var_Click,
+                                0,
+                                UpdateContext({var_NewItem: Text(SCS_SearchContract_DT.Selected.ID)});
+                                UpdateContext({var_Click: 1});
+                                UpdateContext({var_TimerStart: false});
+                                UpdateContext({var_TimerStart: true}),
+                                1,
+                                If(
+                                    var_NewItem = Text(SCS_SearchContract_DT.Selected.ID),
+                                    UpdateContext({var_Click: 2}),
+                                    UpdateContext({var_Click: 1})
+                                ),
+                                2,
+                                If(
+                                    var_NewItem = Text(SCS_SearchContract_DT.Selected.ID),
+                                    UpdateContext({var_Click: 2}),
+                                    UpdateContext({var_Click: 1})
+                                )
+                            )
+                        )
+                    Order: =14
+                    Text: =ThisItem.Currency.Value
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =19
+
+                SC_DocumentDate_Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="DocumentDate"
+                    FieldName: ="DocumentDate"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    OnSelect: |-
+                        =If(
+                            !var_popVisble,
+                            UpdateContext({var_Text: "-"});
+                            UpdateContext({var_popVisble: false});
+                            Switch(
+                                var_Click,
+                                0,
+                                UpdateContext({var_NewItem: Text(SCS_SearchContract_DT.Selected.ID)});
+                                UpdateContext({var_Click: 1});
+                                UpdateContext({var_TimerStart: false});
+                                UpdateContext({var_TimerStart: true}),
+                                1,
+                                If(
+                                    var_NewItem = Text(SCS_SearchContract_DT.Selected.ID),
+                                    UpdateContext({var_Click: 2}),
+                                    UpdateContext({var_Click: 1})
+                                ),
+                                2,
+                                If(
+                                    var_NewItem = Text(SCS_SearchContract_DT.Selected.ID),
+                                    UpdateContext({var_Click: 2}),
+                                    UpdateContext({var_Click: 1})
+                                )
+                            )
+                        )
+                    Order: =4
+                    Text: =ThisItem.DocumentDate
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =20
+
+                SC_Part_A_Signer_Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="Part A Signer"
+                    FieldName: ="Part_A_Signer"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    OnSelect: |-
+                        =If(
+                            !var_popVisble,
+                            UpdateContext({var_Text: "-"});
+                            UpdateContext({var_popVisble: false});
+                            Switch(
+                                var_Click,
+                                0,
+                                UpdateContext({var_NewItem: Text(SCS_SearchContract_DT.Selected.ID)});
+                                UpdateContext({var_Click: 1});
+                                UpdateContext({var_TimerStart: false});
+                                UpdateContext({var_TimerStart: true}),
+                                1,
+                                If(
+                                    var_NewItem = Text(SCS_SearchContract_DT.Selected.ID),
+                                    UpdateContext({var_Click: 2}),
+                                    UpdateContext({var_Click: 1})
+                                ),
+                                2,
+                                If(
+                                    var_NewItem = Text(SCS_SearchContract_DT.Selected.ID),
+                                    UpdateContext({var_Click: 2}),
+                                    UpdateContext({var_Click: 1})
+                                )
+                            )
+                        )
+                    Order: =17
+                    Text: =ThisItem.Part_A_Signer
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =28
+
+                SC_Part_B_Signer_Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="Part_B_Signer"
+                    FieldName: ="Part_B_Signer"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    OnSelect: |-
+                        =If(
+                            !var_popVisble,
+                            UpdateContext({var_Text: "-"});
+                            UpdateContext({var_popVisble: false});
+                            Switch(
+                                var_Click,
+                                0,
+                                UpdateContext({var_NewItem: Text(SCS_SearchContract_DT.Selected.ID)});
+                                UpdateContext({var_Click: 1});
+                                UpdateContext({var_TimerStart: false});
+                                UpdateContext({var_TimerStart: true}),
+                                1,
+                                If(
+                                    var_NewItem = Text(SCS_SearchContract_DT.Selected.ID),
+                                    UpdateContext({var_Click: 2}),
+                                    UpdateContext({var_Click: 1})
+                                ),
+                                2,
+                                If(
+                                    var_NewItem = Text(SCS_SearchContract_DT.Selected.ID),
+                                    UpdateContext({var_Click: 2}),
+                                    UpdateContext({var_Click: 1})
+                                )
+                            )
+                        )
+                    Order: =18
+                    Text: =ThisItem.Part_B_Signer
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =29
+
+                SC_ProjectName_Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="Project Name"
+                    FieldName: ="ProjectName"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    OnSelect: |-
+                        =If(
+                            !var_popVisble,
+                            UpdateContext({var_Text: "-"});
+                            UpdateContext({var_popVisble: false});
+                            Switch(
+                                var_Click,
+                                0,
+                                UpdateContext({var_NewItem: Text(SCS_SearchContract_DT.Selected.ID)});
+                                UpdateContext({var_Click: 1});
+                                UpdateContext({var_TimerStart: false});
+                                UpdateContext({var_TimerStart: true}),
+                                1,
+                                If(
+                                    var_NewItem = Text(SCS_SearchContract_DT.Selected.ID),
+                                    UpdateContext({var_Click: 2}),
+                                    UpdateContext({var_Click: 1})
+                                ),
+                                2,
+                                If(
+                                    var_NewItem = Text(SCS_SearchContract_DT.Selected.ID),
+                                    UpdateContext({var_Click: 2}),
+                                    UpdateContext({var_Click: 1})
+                                )
+                            )
+                        )
+                    Order: =7
+                    Text: =ThisItem.ProjectName
+                    Width: =100
+                    X: =814
+                    Y: =0
+                    ZIndex: =30
+
+                SC_Remark_Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="Remark"
+                    FieldName: ="Remark"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    OnSelect: |-
+                        =If(
+                            !var_popVisble,
+                            UpdateContext({var_Text: "-"});
+                            UpdateContext({var_popVisble: false});
+                            Switch(
+                                var_Click,
+                                0,
+                                UpdateContext({var_NewItem: Text(SCS_SearchContract_DT.Selected.ID)});
+                                UpdateContext({var_Click: 1});
+                                UpdateContext({var_TimerStart: false});
+                                UpdateContext({var_TimerStart: true}),
+                                1,
+                                If(
+                                    var_NewItem = Text(SCS_SearchContract_DT.Selected.ID),
+                                    UpdateContext({var_Click: 2}),
+                                    UpdateContext({var_Click: 1})
+                                ),
+                                2,
+                                If(
+                                    var_NewItem = Text(SCS_SearchContract_DT.Selected.ID),
+                                    UpdateContext({var_Click: 2}),
+                                    UpdateContext({var_Click: 1})
+                                )
+                            )
+                        )
+                    Order: =19
+                    Text: =ThisItem.Remark
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =31
+
+                "'SC_sign-in Date_Column1' As dataTableColumn.textualColumn":
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="sign-in Date"
+                    FieldName: ="sign-in Date"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    OnSelect: |-
+                        =If(
+                            !var_popVisble,
+                            UpdateContext({var_Text: "-"});
+                            UpdateContext({var_popVisble: false});
+                            Switch(
+                                var_Click,
+                                0,
+                                UpdateContext({var_NewItem: Text(SCS_SearchContract_DT.Selected.ID)});
+                                UpdateContext({var_Click: 1});
+                                UpdateContext({var_TimerStart: false});
+                                UpdateContext({var_TimerStart: true}),
+                                1,
+                                If(
+                                    var_NewItem = Text(SCS_SearchContract_DT.Selected.ID),
+                                    UpdateContext({var_Click: 2}),
+                                    UpdateContext({var_Click: 1})
+                                ),
+                                2,
+                                If(
+                                    var_NewItem = Text(SCS_SearchContract_DT.Selected.ID),
+                                    UpdateContext({var_Click: 2}),
+                                    UpdateContext({var_Click: 1})
+                                )
+                            )
+                        )
+                    Order: =21
+                    Text: =ThisItem.'sign-in Date'
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =32
+
+                SC_Title_Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="Project Number"
+                    FieldName: ="Title"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    OnSelect: |-
+                        =If(
+                            !var_popVisble,
+                            UpdateContext({var_Text: "-"});
+                            UpdateContext({var_popVisble: false});
+                            Switch(
+                                var_Click,
+                                0,
+                                UpdateContext({var_NewItem: Text(SCS_SearchContract_DT.Selected.ID)});
+                                UpdateContext({var_Click: 1});
+                                UpdateContext({var_TimerStart: false});
+                                UpdateContext({var_TimerStart: true}),
+                                1,
+                                If(
+                                    var_NewItem = Text(SCS_SearchContract_DT.Selected.ID),
+                                    UpdateContext({var_Click: 2}),
+                                    UpdateContext({var_Click: 1})
+                                ),
+                                2,
+                                If(
+                                    var_NewItem = Text(SCS_SearchContract_DT.Selected.ID),
+                                    UpdateContext({var_Click: 2}),
+                                    UpdateContext({var_Click: 1})
+                                )
+                            )
+                        )
+                    Order: =5
+                    Text: =ThisItem.Title
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =33
+
+                SC_Vendor_text_Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="Vendor"
+                    FieldName: ="Vendor_text"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    OnSelect: |-
+                        =If(
+                            !var_popVisble,
+                            UpdateContext({var_Text: "-"});
+                            UpdateContext({var_popVisble: false});
+                            Switch(
+                                var_Click,
+                                0,
+                                UpdateContext({var_NewItem: Text(SCS_SearchContract_DT.Selected.ID)});
+                                UpdateContext({var_Click: 1});
+                                UpdateContext({var_TimerStart: false});
+                                UpdateContext({var_TimerStart: true}),
+                                1,
+                                If(
+                                    var_NewItem = Text(SCS_SearchContract_DT.Selected.ID),
+                                    UpdateContext({var_Click: 2}),
+                                    UpdateContext({var_Click: 1})
+                                ),
+                                2,
+                                If(
+                                    var_NewItem = Text(SCS_SearchContract_DT.Selected.ID),
+                                    UpdateContext({var_Click: 2}),
+                                    UpdateContext({var_Click: 1})
+                                )
+                            )
+                        )
+                    Order: =3
+                    Text: =ThisItem.Vendor_text
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =35
+
+        SCS_CM_SuppleBudget_Card As dataCard.blankCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =281
+            Width: =1128
+            X: =0
+            Y: =2
+            ZIndex: =3
+
+            SCS_SuppleB_HD_2 As group:
+                Height: =5
+                Width: =5
+                X: =60
+                Y: =60
+                ZIndex: =13
+
+                SB_HD_header_Vendor_2 As label:
+                    FontWeight: =FontWeight.Bold
+                    Height: =35
+                    Size: =14
+                    Text: ="Vendor"
+                    Width: =83
+                    X: =38
+                    Y: =9
+                    ZIndex: =2
+
+                SB_HD_header_ProjectName_2 As label:
+                    FontWeight: =FontWeight.Bold
+                    Height: =35
+                    Size: =14
+                    Text: ="Project Name"
+                    X: =237
+                    Y: =9
+                    ZIndex: =3
+
+                SB_HD_header_Budget_2 As label:
+                    FontWeight: =FontWeight.Bold
+                    Height: =35
+                    Size: =14
+                    Text: ="Budget"
+                    Width: =80
+                    X: =767
+                    Y: =9
+                    ZIndex: =4
+
+                SB_HD_label_Vendor_2 As label:
+                    Height: =35
+                    Text: =SCS_SearchContract_DT.Selected.Vendor.Value
+                    X: =128
+                    Y: =9
+                    ZIndex: =5
+
+                SB_HD_label_ProjectName_2 As label:
+                    Height: =35
+                    Text: =SCS_SearchContract_DT.Selected.ProjectName
+                    Width: =376
+                    X: =394
+                    Y: =9
+                    ZIndex: =6
+
+                SB_HD_label_Budget_2 As label:
+                    Align: =Align.Right
+                    Height: =35
+                    Text: |-
+                        =Text(Value(SCS_SearchContract_DT.Selected.Amount, "en-US"), "#,###", "en-US")
+                    Width: =148
+                    X: =928
+                    Y: =9
+                    ZIndex: =7
+
+                SB_HD_label_Currency_2 As label:
+                    Height: =35
+                    Text: =SCS_SearchContract_DT.Selected.Currency.Value
+                    Width: =53
+                    X: =881
+                    Y: =9
+                    ZIndex: =8
+
+            SCS_CM_SB_BudgetAmount_Gallery As gallery.galleryHorizontal:
+                Height: =51
+                Items: |-
+                    =SortByColumns(
+                        AddColumns(
+                            GroupBy(
+                                AddColumns(
+                                    Switch (
+                                        SCS_SearchContract_DT.Selected.'是主約、附約或追加金額？'.Value,
+                                        const_mainContract,
+                                        Filter(
+                                            SBContractCollect As DS,
+                                            (DS.主約 = Text(SCS_SearchContract_DT.Selected.ID) && DS.'是主約、附約或追加金額？'.Value = const_suppleB) || DS.ID = SCS_SearchContract_DT.Selected.ID,
+                                            Text(DS.deletionFlag) = Text(false)
+                                        ),
+                                        const_subContract,
+                                        Filter(
+                                            SBContractCollect As DS,
+                                            (DS.附約 = Text(SCS_SearchContract_DT.Selected.ID) || DS.ID = SCS_SearchContract_DT.Selected.ID),
+                                            Text(DS.deletionFlag) = Text(false)
+                                        )
+                                    ) As SBDS,
+                                    "Currency_str",
+                                    SBDS.Currency.Value
+                                ),
+                                "Currency_str",
+                                "CurrencyGroup"
+                            ) As GPDS,
+                            "SumOfCurrency",
+                            Sum(
+                                GPDS.CurrencyGroup,
+                                Amount
+                            )
+                        ),
+                        "Currency_str",
+                        Descending
+                    )
+                TemplateSize: =258
+                Width: =758
+                X: =334
+                Y: =210
+                ZIndex: =20
+
+                SCS_CM_SB_BA_SumOfCurrency As label:
+                    Color: =RGBA(255, 0, 0, 1)
+                    Height: =41
+                    OnSelect: =Select(Parent)
+                    Size: =20
+                    Text: |-
+                        =Text(Value(ThisItem.SumOfCurrency, "en-US"), ThisItem.Currency_str &" #,###", "en-US")
+                    Visible: =If(!SB_DT_EditBool||CountRows(SB_DT_Gallery_2.AllItems)=0, true, false)
+                    Width: =247
+                    X: =10
+                    ZIndex: =1
+
+            SCS_SuppleB_DT_2 As group:
+                Height: =5
+                Width: =5
+                X: =-232
+                Y: =-471
+                ZIndex: =25
+
+                SCS_DT_FootBackground_2 As rectangle:
+                    Fill: =RGBA(230, 230, 230, 1)
+                    Height: =255
+                    Width: =1055
+                    X: =30
+                    Y: =6
+                    ZIndex: =1
+
+                SB_DT_Currency_Header_2 As label:
+                    FontWeight: =FontWeight.Bold
+                    Height: =33
+                    Size: =14
+                    Text: ="Currency"
+                    Visible: =If(CountRows(SB_DT_Gallery_2.AllItems)>0, true, false)
+                    Width: =125
+                    X: =85
+                    Y: =64
+                    ZIndex: =9
+
+                SB_DT_SB_Header_2 As label:
+                    FontWeight: =FontWeight.Bold
+                    Height: =44
+                    Size: =14
+                    Text: |-
+                        ="Supplementary 
+                        Budget"
+                    Visible: =If(CountRows(SB_DT_Gallery_2.AllItems)>0, true, false)
+                    Width: =245
+                    X: =218
+                    Y: =56
+                    ZIndex: =10
+
+                SB_DT_Date_Header_2 As label:
+                    FontWeight: =FontWeight.Bold
+                    Height: =33
+                    Size: =14
+                    Text: ="Date"
+                    Visible: =If(CountRows(SB_DT_Gallery_2.AllItems)>0, true, false)
+                    X: =431
+                    Y: =64
+                    ZIndex: =11
+
+                SB_DT_Reason_Header_2 As label:
+                    FontWeight: =FontWeight.Bold
+                    Height: =33
+                    Size: =14
+                    Text: ="Reason"
+                    Visible: =If(CountRows(SB_DT_Gallery_2.AllItems)>0, true, false)
+                    Width: =245
+                    X: =622
+                    Y: =64
+                    ZIndex: =12
+
+                SB_DT_Gallery_2 As gallery.galleryVertical:
+                    Height: |-
+                        =If(!SB_DT_EditBool,100
+                        ,
+                        151)
+                    Items: |-
+                        =
+                            Switch (
+                                SCS_SearchContract_DT.Selected.'是主約、附約或追加金額？'.Value,
+                                const_mainContract,
+                                Filter(
+                                    SBContractCollect,
+                                    Text(SCS_SearchContract_DT.Selected.ID) = 主約 ,
+                                    '是主約、附約或追加金額？'.Value = const_suppleB,
+                                    Text(deletionFlag) = Text(false)
+                                )
+                                ,
+                                const_subContract,
+                                Filter(
+                                    SBContractCollect,
+                                   Text(SCS_SearchContract_DT.Selected.ID) = 附約 ,
+                                    '是主約、附約或追加金額？'.Value = const_suppleB,
+                                    Text(deletionFlag) = Text(false)
+                                )
+                            )
+                    Layout: =Layout.Vertical
+                    TemplateSize: =39
+                    Visible: =If(CountRows(SB_DT_Gallery_2.AllItems)>0, true, false)
+                    Width: =1055
+                    X: =30
+                    Y: =110
+                    ZIndex: =13
+
+                    SB_DT_Currency_DropDown_2 As dropdown:
+                        Default: =ThisItem.Currency.Value
+                        DisplayMode: = DisplayMode.View
+                        Fill: |-
+                            =If( ThisItem.Currency.Value = SB_DT_Currency_DropDown_2.SelectedText.Value
+                            ,White,LightBlue)
+                        Height: =39
+                        Items: =Choices(ContractManagementList.Currency)
+                        OnSelect: =Select(Parent)
+                        Width: =92
+                        X: =56
+                        ZIndex: =1
+
+                    SB_DT_SupplementaryBudget_Text_2 As text:
+                        Align: =Align.Right
+                        Default: |-
+                            =Text(Value(ThisItem.Amount, "en-US"), "#,###", "en-US")
+                        DisplayMode: |+
+                            =View
+                            
+                        Fill: |-
+                            =If( ThisItem.Amount = Value(SB_DT_SupplementaryBudget_Text_2.Text)
+                            ,White,LightBlue)
+                        Format: =TextFormat.Number
+                        Height: =39
+                        OnChange: |
+                            =false
+                        OnSelect: =Select(Parent)
+                        Width: =168
+                        X: =184
+                        ZIndex: =2
+
+                    SB_DT_Date_Picker_2 As datepicker:
+                        DefaultDate: =ThisItem.DocumentDate
+                        DisplayMode: |
+                            =If(SB_DT_EditBool, DisplayMode.Edit, DisplayMode.View)
+                        Fill: |-
+                            =If( ThisItem.DocumentDate = SB_DT_Date_Picker_2.SelectedDate
+                            ,White,LightBlue)
+                        Height: =39
+                        OnSelect: =Select(Parent)
+                        Width: =148
+                        X: =394
+                        ZIndex: =3
+
+                    SB_DT_Check_btn_2 As icon.Edit:
+                        DisabledColor: =RGBA(116, 116, 116, 1)
+                        DisplayMode: |-
+                            =If(  ThisItem.Currency.Value = SB_DT_Currency_DropDown_2.SelectedText.Value
+                                && ThisItem.Amount = Value(SB_DT_SupplementaryBudget_Text_2.Text)
+                                && ThisItem.DocumentDate = SB_DT_Date_Picker_2.SelectedDate
+                                &&  SB_DT_Reason_Text_2.Text = ThisItem.追加原因 || (SB_DT_Reason_Text_2.Text = "" && IsBlank(ThisItem.追加原因)),
+                            DisplayMode.Disabled,
+                            DisplayMode.Edit)
+                        Height: =32
+                        Icon: =Icon.Check
+                        OnSelect: |
+                            =UpdateContext(
+                                {
+                                    EditCollect: First(
+                                        Filter(
+                                            SBContractCollect,
+                                            ID = ThisItem.ID
+                                        )
+                                    )
+                                }
+                            );
+                            EditCollect.Title;
+                            Patch(
+                                ContractManagementList,
+                                EditCollect,
+                                {
+                                    Currency: SB_DT_Currency_DropDown_2.SelectedText,
+                                    DocumentDate: SB_DT_Date_Picker_2.SelectedDate,
+                                    Amount: Value(SB_DT_SupplementaryBudget_Text_2.Text),
+                                    追加原因: SB_DT_Reason_Text_2.Text
+                                }
+                            );
+                            Set(
+                                varErrors,
+                                Errors(
+                                    ContractManagementList,
+                                    EditCollect
+                                )
+                            );
+                            If(
+                                IsEmpty(varErrors),
+                                Notify(
+                                    msg_updateSuccess,
+                                    Success,
+                                    3000
+                                ),
+                                Notify(
+                                    First(varErrors).Message,
+                                    Error,
+                                    3000
+                                )
+                            );
+                            UpdateIf(SBContractCollect, ID = ThisItem.ID && IsEmpty(varErrors) ,   {
+                                    Currency: SB_DT_Currency_DropDown_2.SelectedText,
+                                    DocumentDate: SB_DT_Date_Picker_2.SelectedDate,
+                                    Amount: Value(SB_DT_SupplementaryBudget_Text_2.Text),
+                                    追加原因: SB_DT_Reason_Text_2.Text
+                                });
+                            Refresh(ContractManagementList);
+                            ClearCollect(PopContractCollect,ContractManagementList);
+                        Visible: =SB_DT_EditBool
+                        Width: =44
+                        X: =906
+                        Y: =1
+                        ZIndex: =5
+
+                    SB_DT_Undo_btn_2 As icon.Undo:
+                        DisabledColor: =RGBA(149, 149, 149, 1)
+                        DisplayMode: |-
+                            =If(  ThisItem.Currency.Value = SB_DT_Currency_DropDown_2.SelectedText.Value
+                                && ThisItem.Amount = Value(SB_DT_SupplementaryBudget_Text_2.Text)
+                                && ThisItem.DocumentDate = SB_DT_Date_Picker_2.SelectedDate
+                                &&  SB_DT_Reason_Text_2.Text = ThisItem.追加原因 || (SB_DT_Reason_Text_2.Text = "" && IsBlank(ThisItem.追加原因)),
+                            DisplayMode.Disabled,
+                            DisplayMode.Edit)
+                        Height: =32
+                        Icon: =Icon.Undo
+                        OnSelect: |-
+                            =Concurrent(
+                                Reset(SB_DT_Currency_DropDown_2),
+                                Reset(SB_DT_Date_Picker_2),
+                                Reset(SB_DT_Reason_Text_2),
+                                Reset(SB_DT_SupplementaryBudget_Text_2)
+                            )
+                        Visible: =SB_DT_EditBool
+                        Width: =44
+                        X: =949
+                        Y: =4
+                        ZIndex: =6
+
+                    SB_DT_Delete_btn_2 As icon.Trash:
+                        DisplayMode: =
+                        Height: =32
+                        Icon: =Icon.Trash
+                        OnSelect: |
+                            =UpdateContext(
+                                {
+                                    EditCollect: First(
+                                        Filter(
+                                            SBContractCollect,
+                                            ID = ThisItem.ID
+                                        )
+                                    )
+                                }
+                            );
+                            EditCollect.Title;
+                            Patch(ContractManagementList,EditCollect,{deletionFlag:true});
+                            Set(
+                                varErrors,
+                                Errors(
+                                    ContractManagementList,
+                                    EditCollect
+                                )
+                            );
+                            If(
+                                IsEmpty(varErrors),
+                                Notify(
+                                    msg_deleteSuccess,
+                                    Success,
+                                    3000
+                                ),
+                                Notify(
+                                    First(varErrors).Message,
+                                    Error,
+                                    3000
+                                )
+                            );
+                            RemoveIf(
+                                SBContractCollect,
+                                ID = ThisItem.ID && IsEmpty(varErrors)
+                            );
+                            Refresh(ContractManagementList);
+                            ClearCollect(PopContractCollect,ContractManagementList);
+                        Visible: =SB_DT_EditBool
+                        Width: =44
+                        X: =990
+                        Y: =1
+                        ZIndex: =7
+
+                    SB_DT_Reason_Text_2 As text:
+                        Default: |
+                            =ThisItem.追加原因
+                        DisplayMode: |
+                            =If(SB_DT_EditBool, DisplayMode.Edit, DisplayMode.View)
+                        Fill: |-
+                            =If( SB_DT_Reason_Text_2.Text = ThisItem.追加原因 || (SB_DT_Reason_Text_2.Text = "" && IsBlank(ThisItem.追加原因))
+                            ,White,LightBlue)
+                        Height: =39
+                        OnSelect: =Select(Parent)
+                        X: =579
+                        ZIndex: =8
+
+                    SB_DT_DV_btn As icon.DocumentwithContent:
+                        DisabledBorderColor: =RGBA(204, 204, 204, 1)
+                        DisabledColor: =LightGray
+                        DisplayMode: |-
+                            =If(CountRows(Filter(
+                                DVCollect As DV_DS,
+                                DV_DS.CMID =Text(ThisItem.ID)
+                            ))>0,DisplayMode.Edit,DisplayMode.Disabled)
+                        Height: =39
+                        Icon: =Icon.DocumentWithContent
+                        OnSelect: |-
+                            =Concurrent(
+                                UpdateContext({Bool_DV_Visible: true}),
+                                UpdateContext({var_SCS_DV_CMID: Text(SB_DT_Gallery_2.Selected.ID)}),
+                                UpdateContext({var_SCS_DV_contractDefine: const_suppleB}),
+                                UpdateContext({var_SCS_DV_projectName: SB_HD_label_ProjectName_2.Text})
+                            )
+                        Width: =45
+                        X: =11
+                        ZIndex: =10
+
+                SB_DT_ABLable_AmountBudget_2 As label:
+                    Color: =RGBA(255, 0, 0, 1)
+                    FontWeight: =FontWeight.Bold
+                    Height: =53
+                    Size: =25
+                    Text: ="Budget Amount"
+                    Visible: =If(!SB_DT_EditBool||CountRows(SB_DT_Gallery_2.AllItems)=0, true, false)
+                    Width: =277
+                    X: =36
+                    Y: =204
+                    ZIndex: =14
+
+                SB_DT_upLine_2 As rectangle:
+                    BorderThickness: =1
+                    Height: =1
+                    Visible: =If(CountRows(SB_DT_Gallery_2.AllItems)>0, true, false)
+                    Width: =1055
+                    X: =30
+                    Y: =53
+                    ZIndex: =16
+
+                SB_DT_downLine_2 As rectangle:
+                    BorderThickness: =1
+                    Height: =1
+                    Visible: =If(CountRows(SB_DT_Gallery_2.AllItems)>0, true, false)
+                    Width: =1055
+                    X: =30
+                    Y: =104
+                    ZIndex: =17
+
+                SB_Edit_btn_1 As icon.Edit:
+                    DisabledColor: =RGBA(179, 179, 179, 1)
+                    DisplayMode: =If(SB_HD_UnEditBtnBool, DisplayMode.Disabled, DisplayMode.Edit)
+                    Height: =33
+                    Icon: =Icon.Edit
+                    OnSelect: |
+                        =Refresh(ContractManagementList);
+                        ClearCollect(SBContractCollect, ContractManagementList);
+                        If(SB_DT_EditBool = true, UpdateContext({SB_DT_EditBool:false}),
+                        UpdateContext({SB_DT_EditBool : true}));
+                    Visible: =If(CountRows(SB_DT_Gallery_2.AllItems)>0, true, false)
+                    Width: =37
+                    X: =41
+                    Y: =62
+                    ZIndex: =19
+
+    Timer1 As timer:
+        Duration: =var_duration
+        OnTimerEnd: |-
+            =Refresh(ContractManagementList);
+            ClearCollect(
+                        SBContractCollect,
+                        ContractManagementList
+                    );
+            Switch(
+                var_Click,
+                1,
+                UpdateContext({var_Text: "Single Click"}),
+                2,
+                Concurrent(
+                    UpdateContext({var_popVisble: true}),
+                    UpdateContext({var_Text: "mutiple Click"}),
+                    UpdateContext({SB_DT_EditBool: false}),
+                    UpdateContext({SB_HD_UnEditBtnBool: true})
+                );
+                ClearCollect(
+                addCol_C,
+                AddColumns(
+                    PopContractCollect As Filter_DS,
+                    "Vendor_text",
+                    Filter_DS.Vendor.Value,
+                    "Title_contratType",
+                    Filter_DS.'是主約、附約或追加金額？'.Value,
+                    "contract_Group",
+                    Filter_DS.簽約主體,
+                    "Currency_text",
+                    Filter_DS.Currency.Value,
+                    "Part_A_Signer",
+                    Filter_DS.我方簽約,
+                    "Part_B_Signer",
+                    Filter_DS.對方簽約人,
+                    "sign-in Date",
+                    Filter_DS.'Sign-inDate',
+                    "Reason_T",
+                    Filter_DS.追加原因,
+                    "Contract_type",
+                    Filter_DS.ContractType.Value,
+                    "Belong_Main",
+                    If(
+                        Filter_DS.'是主約、附約或追加金額？'.Value = const_mainContract,
+                        Text(Filter_DS.ID),
+                        Filter_DS.'是主約、附約或追加金額？'.Value = const_subContract || (Filter_DS.'是主約、附約或追加金額？'.Value = const_suppleB && IsBlank(Filter_DS.附約)),
+                        Text(Filter_DS.主約),
+                        Filter_DS.'是主約、附約或追加金額？'.Value = const_suppleB && IsBlank(Filter_DS.主約),
+                        ""
+                    ),
+                    "sub_rank",
+                    If(
+                        Filter_DS.'是主約、附約或追加金額？'.Value = const_mainContract || (Filter_DS.'是主約、附約或追加金額？'.Value = const_suppleB && IsBlank(Filter_DS.附約)),
+                        -1,
+                        Filter_DS.'是主約、附約或追加金額？'.Value = const_subContract,
+                        Text(Filter_DS.ID),
+                        Filter_DS.'是主約、附約或追加金額？'.Value = const_suppleB && IsBlank(Filter_DS.主約),
+                        Filter_DS.附約
+                    ),
+                    "rank",
+                    If(
+                        Filter_DS.'是主約、附約或追加金額？'.Value = const_mainContract,
+                        1,
+                        Filter_DS.'是主約、附約或追加金額？'.Value = const_subContract,
+                        3,
+                        Filter_DS.'是主約、附約或追加金額？'.Value = const_suppleB && IsBlank(Filter_DS.附約),
+                        2,
+                        4
+                    ),
+                    "Group",
+                    If(
+                        Filter_DS.'是主約、附約或追加金額？'.Value = const_mainContract,
+                        Filter_DS.ProjectName,
+                        ""
+                    ),
+                    "SubGroup",
+                    If(
+                        Filter_DS.'是主約、附約或追加金額？'.Value = const_suppleB && IsBlank(Filter_DS.主約),
+                            First( 
+                                Filter(PopContractCollect As fiter_DS,
+                                        fiter_DS.ID = Value(Filter_DS.附約)
+                                    )
+                            ).ProjectName,
+                        Filter_DS.'是主約、附約或追加金額？'.Value = const_subContract,
+                            Filter_DS.ProjectName,
+                            Blank()
+                    )
+                )
+            );
+            ClearCollect(
+                updateCol_C,
+                UpdateIf(
+                    addCol_C As updateIf_DS,
+                    updateIf_DS.'是主約、附約或追加金額？'.Value = const_suppleB && IsBlank(updateIf_DS.主約),
+                    {
+                        Belong_Main: First(
+                            Filter(
+                                addCol_C As fiter_DS,
+                                fiter_DS.ID = Value(updateIf_DS.附約)
+                            )
+                        ).Belong_Main
+                    }
+                )
+            );
+                
+            );
+            Concurrent(
+            UpdateContext({var_Click: 0}),
+            UpdateContext({var_NewItem: ""}))
+        OnTimerStart: =var_TimerStart
+        Start: =var_TimerStart
+        Visible: =false
+        X: =23
+        Y: =615
+        ZIndex: =19
+
+    "GalEditContract As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver4.0'":
+        Height: =78
+        Items: =SCS_SearchContract_DT
+        Layout: =Layout.Vertical
+        TemplatePadding: =0
+        TemplateSize: =78
+        Width: =145
+        X: =1219
+        Y: =201
+        ZIndex: =23
+
+        Button4 As button:
+            Height: =39
+            OnSelect: =ResetForm(ContractForm);EditForm(ContractForm);Navigate(EditContract);
+            Text: ="Edit"
+            Width: =97
+            X: =15
+            Y: =25
+            ZIndex: =6
+
+    SCS_PopSC_close_BG As rectangle:
+        Fill: =RGBA(0,0,0,0)
+        Height: =768
+        OnSelect: |-
+            =Concurrent(
+                UpdateContext({var_popVisble: false}),
+                UpdateContext({SB_HD_UnEditBtnBool: false}),
+                UpdateContext({Bool_DV_Visible: false}),
+                UpdateContext({var_SCS_DV_CMID: ""}),
+                UpdateContext({var_SCS_DV_contractDefine: ""}),
+                UpdateContext({var_SCS_DV_projectName: ""})
+            )
+        Visible: =var_popVisble || Bool_DV_Visible
+        Width: =1366
+        ZIndex: =24
+
+    SCS_PopContractScreen_Group As group:
+        Height: =5
+        Width: =5
+        X: =-391
+        Y: =-36
+        ZIndex: =38
+
+        PopCS_BG_CT_1 As rectangle:
+            BorderThickness: =1
+            Fill: =White
+            Height: =568
+            Visible: =var_popVisble
+            Width: =729
+            X: =393
+            Y: =118
+            ZIndex: =25
+
+        PopCS_BG_HD_1 As rectangle:
+            Height: =53
+            Visible: =var_popVisble
+            Width: =729
+            X: =393
+            Y: =118
+            ZIndex: =26
+
+        PopCS_Close_Btn_1 As icon.Cancel:
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =45
+            Icon: =Icon.Cancel
+            OnSelect: |-
+                =Concurrent(
+                UpdateContext({var_popVisble:  false}),
+                UpdateContext({SB_HD_UnEditBtnBool: false}))
+            Visible: =var_popVisble
+            Width: =53
+            X: =1065
+            Y: =125
+            ZIndex: =27
+
+        PopCS_MainContract_HD_Label_1 As label:
+            FontWeight: =FontWeight.Semibold
+            Size: =14
+            Text: ="Main Contract"
+            Visible: =var_popVisble
+            Width: =162
+            X: =410
+            Y: =179
+            ZIndex: =28
+
+        PopCS_SuBContract_HD_Label_1 As label:
+            FontWeight: =FontWeight.Semibold
+            Size: =14
+            Text: ="Sub Contract"
+            Visible: =var_popVisble
+            Width: =162
+            X: =410
+            Y: =287
+            ZIndex: =29
+
+        PopCS_MainContract_Gallery_1 As gallery.galleryVertical:
+            Fill: |-
+                =
+                RGBA(0,0,0,0)
+            Height: =74
+            Items: |
+                =
+                Switch(
+                    SCS_SearchContract_DT.Selected.'是主約、附約或追加金額？'.Value,
+                    const_mainContract,
+                    Filter(
+                            PopContractCollect,
+                            ID = SCS_SearchContract_DT.Selected.ID,
+                            '是主約、附約或追加金額？'.Value = const_mainContract,
+                            Text(deletionFlag) = Text(false)
+                        ),
+                    const_subContract,
+                    Filter(
+                            PopContractCollect,
+                            ID = Value(SCS_SearchContract_DT.Selected.主約),
+                            '是主約、附約或追加金額？'.Value = const_mainContract,
+                            Text(deletionFlag) = Text(false)
+                        )
+                 )
+            Layout: =Layout.Vertical
+            TemplateSize: =62
+            Visible: =var_popVisble
+            Width: =724
+            X: =395
+            Y: =213
+            ZIndex: =30
+
+            PopCS_MC_G_BG_Selected_1 As rectangle:
+                Fill: =If(ThisItem.ID = SCS_SearchContract_DT.Selected.ID, LightGray, RGBA(0,0,0,0))
+                Height: =62
+                OnSelect: =Select(Parent)
+                Width: =714
+                ZIndex: =1
+
+            PopCS_MC_G_ProjectName_Label_1 As label:
+                Height: =50
+                OnSelect: =Select(Parent)
+                Size: =9
+                Text: =ThisItem.ProjectName
+                Width: =199
+                X: =15
+                Y: =7
+                ZIndex: =2
+
+            PopCS_MC_G_Date_Label_1 As label:
+                Height: =50
+                OnSelect: =Select(Parent)
+                Size: =9
+                Text: =ThisItem.DocumentDate
+                Width: =95
+                X: =228
+                Y: =7
+                ZIndex: =3
+
+            PopCS_MC_BudgetAmount_Gallery As gallery.galleryHorizontal:
+                Height: =62
+                Items: |-
+                    =SortByColumns(
+                        AddColumns(
+                            GroupBy(
+                                AddColumns(
+                                    Filter(
+                                        PopContractCollect As RawDS,
+                                        (RawDS.主約 = Text(ThisItem.ID) && RawDS.'是主約、附約或追加金額？'.Value = const_suppleB) || RawDS.ID = ThisItem.ID,
+                                Text(RawDS.deletionFlag) = Text(false)
+                                    ) As FilterDS,
+                                    "Currency_str",
+                                    FilterDS.Currency.Value
+                                ),
+                                "Currency_str",
+                                "CurrencyGroup"
+                            ) As CGDS,
+                            "SumOfCurrency",
+                            Sum(
+                                CGDS.CurrencyGroup,
+                                Amount
+                            )
+                        ),
+                        "Currency_str",
+                        Descending
+                    )
+                TemplateSize: =125
+                Width: =318
+                X: =394
+                ZIndex: =4
+
+                PopCS_MC_BAG_BudgetAmount_Label As label:
+                    Height: =52
+                    OnSelect: =Select(Parent)
+                    Size: =9
+                    Text: |-
+                        =Text(Value(ThisItem.SumOfCurrency, "en-US"), ThisItem.Currency_str & " #,###", "en-US") 
+                    Width: =125
+                    ZIndex: =2
+
+        PopCS_MC_BA_hd As label:
+            Align: =Align.Center
+            FontWeight: =FontWeight.Semibold
+            Size: =14
+            Text: ="Budget Amount"
+            Visible: =var_popVisble
+            Width: =216
+            X: =768
+            Y: =179
+            ZIndex: =31
+
+        PopCS_SC_BA_hd As label:
+            Align: =Align.Center
+            FontWeight: =FontWeight.Semibold
+            Size: =14
+            Text: ="Budget Amount"
+            Visible: =var_popVisble
+            Width: =216
+            X: =768
+            Y: =287
+            ZIndex: =32
+
+        PopCS_SC_BA_Date_hd As label:
+            Align: =Align.Center
+            FontWeight: =FontWeight.Semibold
+            Size: =14
+            Text: ="Date"
+            Visible: =var_popVisble
+            Width: =66
+            X: =624
+            Y: =287
+            ZIndex: =33
+
+        SCS_PCS_SB_Gallery As gallery.galleryVertical:
+            Fill: =RGBA(0,0,0,0)
+            Height: =225
+            Items: |
+                =
+                Switch(
+                    SCS_SearchContract_DT.Selected.'是主約、附約或追加金額？'.Value,
+                    const_mainContract,
+                    Filter(
+                            PopContractCollect,
+                            主約 = Text(SCS_SearchContract_DT.Selected.ID) ,
+                            '是主約、附約或追加金額？'.Value = const_subContract,
+                            Text(deletionFlag) = Text(false)
+                        ),
+                    const_subContract,
+                    Filter(
+                            PopContractCollect,
+                            主約 = SCS_SearchContract_DT.Selected.主約,
+                            '是主約、附約或追加金額？'.Value = const_subContract,
+                            Text(deletionFlag) = Text(false)
+                        )
+                 )
+            Layout: =Layout.Vertical
+            TemplateSize: =50
+            Visible: =var_popVisble
+            Width: =724
+            X: =395
+            Y: =323
+            ZIndex: =34
+
+            PopCS_SBC_G_BG_Selected_1 As rectangle:
+                Fill: =If(ThisItem.ID = SCS_SearchContract_DT.Selected.ID, LightGray, RGBA(0,0,0,0))
+                Height: =50
+                OnSelect: =Select(Parent)
+                Width: =714
+                ZIndex: =1
+
+            SCS_PCS_SB_BudgetAmount_Gallery As gallery.galleryHorizontal:
+                Height: =50
+                Items: |-
+                    =SortByColumns(
+                        AddColumns(
+                            GroupBy(
+                                AddColumns(
+                                    Filter(
+                                        PopContractCollect As RawDS,
+                                        RawDS.附約 = Text(ThisItem.ID) || RawDS.ID = ThisItem.ID,
+                                Text(RawDS.deletionFlag) = Text(false)
+                                    ) As FilterDS,
+                                    "Currency_str",
+                                    FilterDS.Currency.Value
+                                ),
+                                "Currency_str",
+                                "CurrencyGroup"
+                            ) As CGDS,
+                            "SumOfCurrency",
+                            Sum(
+                                CGDS.CurrencyGroup,
+                                Amount
+                            )
+                        ),
+                        "Currency_str",
+                        Descending
+                    )
+                TemplateSize: =127
+                Visible: =var_popVisble
+                Width: =318
+                X: =396
+                ZIndex: =2
+
+                SCS_PCS_SB_BAG_BudgetAmount_Label As label:
+                    OnSelect: =Select(Parent)
+                    Size: =9
+                    Text: |-
+                        =Text(Value(ThisItem.SumOfCurrency, "en-US"),ThisItem.Currency_str & " #,###", "en-US") 
+                    Width: =127
+                    ZIndex: =2
+
+            SCS_PCS_SB_Date_SubContract_Label As label:
+                Height: =50
+                OnSelect: =Select(Parent)
+                Size: =9
+                Text: =ThisItem.ProjectName
+                Visible: =var_popVisble
+                Width: =199
+                X: =15
+                ZIndex: =3
+
+            SCS_PCS_SB_Date_Label As label:
+                Height: =50
+                OnSelect: =Select(Parent)
+                Size: =9
+                Text: =ThisItem.DocumentDate
+                Visible: =var_popVisble
+                Width: =95
+                X: =227
+                ZIndex: =4
+
+        PopCS_MC_BA_Date_hd As label:
+            Align: =Align.Center
+            FontWeight: =FontWeight.Semibold
+            Size: =14
+            Text: ="Date"
+            Visible: =var_popVisble
+            Width: =66
+            X: =624
+            Y: =179
+            ZIndex: =35
+
+        SCS_PCS_Total_Gallery As gallery.galleryHorizontal:
+            Height: =84
+            Items: |-
+                =SortByColumns(
+                    AddColumns(
+                        GroupBy(
+                            Switch(
+                                SCS_SearchContract_DT.Selected.'是主約、附約或追加金額？'.Value,
+                                const_mainContract,
+                                Filter(
+                                    updateCol_C As DS,
+                                    DS.Belong_Main = Text(SCS_SearchContract_DT.Selected.ID),
+                                    Text(DS.deletionFlag) = Text(false)
+                                ),
+                                const_subContract,
+                                Filter(
+                                    updateCol_C As DS,
+                                    DS.Belong_Main = SCS_SearchContract_DT.Selected.主約,
+                                    Text(DS.deletionFlag) = Text(false)
+                                )
+                            ),
+                            "Currency_text",
+                            "CurrencyGroup"
+                        ) As CGDS,
+                        "SumOfCurrency",
+                        Sum(
+                            CGDS.CurrencyGroup,
+                            Amount
+                        )
+                    ),
+                    "Currency_text",
+                    Descending
+                )
+            TemplateSize: =296
+            Visible: =var_popVisble
+            Width: =717
+            X: =405
+            Y: =602
+            ZIndex: =36
+
+            SCS_PCS_TG_SumOfCurrency_label As label:
+                Align: =Align.Right
+                Color: =RGBA(255, 0, 0, 1)
+                Height: =74
+                OnSelect: =Select(Parent)
+                Size: =22
+                Text: |-
+                    =Text(Value(ThisItem.SumOfCurrency, "en-US"), ThisItem.Currency_text &" #,###", "en-US") 
+                Width: =296
+                ZIndex: =2
+
+        SCS_PCS_Total_hd As label:
+            Color: =RGBA(255, 0, 0, 1)
+            FontWeight: =FontWeight.Bold
+            Height: =47
+            Size: =28
+            Text: ="Total"
+            Visible: =var_popVisble
+            Width: =331
+            X: =403
+            Y: =548
+            ZIndex: =37
+
+    SCS_Navi_1 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =42
+
+        Navigation_6 As Navigation_4:
+            Y: =76.79999999999995
+            ZIndex: =4
+
+        Navi_Backgraound_1 As rectangle:
+            Fill: =RGBA(255, 191, 0, 0.28)
+            Height: =85
+            Width: =227
+            Y: =245
+            ZIndex: =18
+
+    SCS_DocumentViewer_Group As group:
+        Height: =5
+        Width: =5
+        X: =-230
+        Y: =-4
+        ZIndex: =49
+
+        SCS_DV_BG As rectangle:
+            BorderThickness: =1
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =680
+            Visible: =Bool_DV_Visible
+            Width: =1050
+            X: =278
+            Y: =40
+            ZIndex: =38
+
+        SCS_DV_PDF_Viewer As pdfViewer:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderThickness: =1
+            Document: |-
+                =If(
+                    Last(
+                        Split(
+                            SCS_DV_Attachment_Gallery.Selected.含副檔名的檔案名稱,
+                            "."
+                        )
+                    ).Result = "pdf",
+                
+                const_API_Path &  EncodeUrl(SCS_DV_Attachment_Gallery.Selected.資料夾路徑 & SCS_DV_Attachment_Gallery.Selected.含副檔名的檔案名稱)
+                    ,
+                    Substitute(
+                        SCS_DV_Attachment_Gallery.Selected.Thumbnail.Large,
+                        "/thumbnail",
+                        "/pdf"
+                    )
+                )
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =608
+            ShowControls: =true
+            Visible: |-
+                =With(   
+                   {
+                        fileextension: Last(
+                            Split(
+                                SCS_DV_Attachment_Gallery.Selected.含副檔名的檔案名稱,
+                                "."
+                            )
+                        ).Result
+                    },
+                        fileextension = "xlsx" || fileextension = "docx" || fileextension = "ppt" || fileextension = "pptx" || fileextension = "pdf"
+                ) && Bool_DV_Visible
+            Width: =781
+            X: =537
+            Y: =101
+            ZIndex: =39
+
+        SCS_DV_Header_BG As rectangle:
+            Height: =49
+            Visible: =Bool_DV_Visible
+            Width: =1050
+            X: =278
+            Y: =40
+            ZIndex: =40
+
+        SCS_DV_Back_Btn As icon.Cancel:
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =44
+            Icon: =Icon.Cancel
+            OnSelect: |-
+                =Concurrent(
+                    UpdateContext({Bool_DV_Visible: false}),
+                    UpdateContext({var_SCS_DV_CMID: ""}),
+                    UpdateContext({var_SCS_DV_contractDefine: ""}),
+                    UpdateContext({var_SCS_DV_projectName: ""})
+                )
+            Visible: =Bool_DV_Visible
+            X: =1261
+            Y: =42
+            ZIndex: =41
+
+        SCS_DV_List_BG As rectangle:
+            Fill: =RGBA(237, 237, 237, 1)
+            Height: =608
+            Visible: =Bool_DV_Visible
+            Width: =245
+            X: =285
+            Y: =101
+            ZIndex: =42
+
+        SCS_DV_Attachment_Gallery As gallery.galleryVertical:
+            Height: =477
+            Items: |-
+                =Filter(
+                    DVCollect As DV_DS,
+                    DV_DS.CMID = var_SCS_DV_CMID,
+                    Text(DV_DS.DeletionFlag) = Text(false)
+                )
+            Layout: =Layout.Vertical
+            TemplateSize: =71
+            Visible: =Bool_DV_Visible
+            Width: =245
+            X: =287
+            Y: =232
+            ZIndex: =43
+
+            SCS_DV_A_FileName_Label As label:
+                Align: =Align.Justify
+                Fill: =RGBA(215, 223, 240, 1)
+                Height: =71
+                OnSelect: =Select(Parent)
+                Size: =11
+                Text: =ThisItem.FileName
+                Width: =145
+                ZIndex: =1
+
+        SCS_DV_Img_View As image:
+            Height: =608
+            Image: =SCS_DV_Attachment_Gallery.Selected.Thumbnail.Large
+            Visible: |-
+                =With(
+                    {
+                        fileextension: Last(
+                            Split(
+                                SCS_DV_Attachment_Gallery.Selected.含副檔名的檔案名稱,
+                                "."
+                            )
+                        ).Result
+                    },
+                    If(
+                        fileextension = "png" || fileextension = "jpg" ,
+                        true,
+                        false
+                    )
+                ) && Bool_DV_Visible
+            Width: =781
+            X: =537
+            Y: =101
+            ZIndex: =44
+
+        SCS_DV_ProjectName_Label As label:
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =11
+            Text: ="Project Name"
+            Visible: =Bool_DV_Visible
+            Width: =245
+            X: =280
+            Y: =105
+            ZIndex: =45
+
+        SCS_DV_ProjectName_Str As label:
+            Size: =8
+            Text: =var_SCS_DV_projectName
+            Visible: =Bool_DV_Visible
+            Width: =245
+            X: =285
+            Y: =125
+            ZIndex: =46
+
+        SCS_DV_ContractDefine_Label As label:
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =11
+            Text: ="Title"
+            Visible: =Bool_DV_Visible
+            Width: =245
+            X: =278
+            Y: =165
+            ZIndex: =47
+
+        SCS_DV_ContractDefine_Str As label:
+            Size: =10
+            Text: =var_SCS_DV_contractDefine
+            Visible: =Bool_DV_Visible
+            Width: =245
+            X: =285
+            Y: =185
+            ZIndex: =48
+
+    SCS_HD_1 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =58
+
+        Header_8 As Header_2:
+            Height: =109
+            ZIndex: =3
+
+        HI_refresh_1 As icon.Reload:
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =52
+            Icon: =Icon.Reload
+            OnSelect: |-
+                =Refresh(ContractManagementList);
+                Concurrent(
+                ClearCollect(SBContractCollect, ContractManagementList),
+                ClearCollect(SearchContractCollect,ContractManagementList),
+                ClearCollect(PopContractCollect,ContractManagementList),
+                ClearCollect(DVCollect,ContractFiles),
+                UpdateContext({var_popVisble:false}),
+                UpdateContext({SB_DT_EditBool:false}))
+            Width: =44
+            X: =1296
+            Y: =14
+            ZIndex: =16
+
+        HI_pdfViewer_btn As icon.DocumentwithContent:
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledColor: =RGBA(179, 179, 179, 1)
+            DisplayMode: |-
+                =If(CountRows(Filter(
+                    DVCollect As DV_DS,
+                    DV_DS.CMID =Text(SCS_SearchContract_DT.Selected.ID)
+                ))>0,DisplayMode.Edit,DisplayMode.Disabled)
+            Fill: =RGBA(0,0,0,0)
+            Height: =60
+            Icon: =Icon.DocumentWithContent
+            OnSelect: |-
+                =Concurrent(
+                    UpdateContext({Bool_DV_Visible: true}),
+                    UpdateContext({var_SCS_DV_CMID: Text(SCS_SearchContract_DT.Selected.ID)}),
+                    UpdateContext({var_SCS_DV_contractDefine: SCS_SearchContract_DT.Selected.Title_contratType}),
+                    UpdateContext({var_SCS_DV_projectName: SCS_SearchContract_DT.Selected.ProjectName})
+                )
+            Width: =60
+            X: =1221
+            Y: =6
+            ZIndex: =22
+
+    SCS_SearchContract_HD_1 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =62
+
+        SC_HD_lable_Vendor_1 As label:
+            FontWeight: =FontWeight.Bold
+            Height: =21
+            Size: =15
+            Text: ="Vendor"
+            Width: =204
+            X: =539
+            Y: =96
+            ZIndex: =5
+
+        SC_HD_lable_ProjectName_1 As label:
+            FontWeight: =FontWeight.Bold
+            Height: =22
+            Size: =15
+            Text: ="Project Name"
+            Width: =204
+            X: =764
+            Y: =96
+            ZIndex: =6
+
+        SC_HD_lable_ProjectNumber_1 As label:
+            FontWeight: =FontWeight.Bold
+            Height: =22
+            Size: =15
+            Text: ="Project Number"
+            Width: =204
+            X: =764
+            Y: =185
+            ZIndex: =7
+
+        SC_HD_lable_StartDate_1 As label:
+            FontWeight: =FontWeight.Bold
+            Height: =21
+            Size: =15
+            Text: ="Document Start Date"
+            Width: =250
+            X: =278
+            Y: =185
+            ZIndex: =8
+
+        SC_HD_lable_EndDate_1 As label:
+            FontWeight: =FontWeight.Bold
+            Height: =21
+            Size: =15
+            Text: ="Document End Date"
+            Width: =250
+            X: =539
+            Y: =185
+            ZIndex: =9
+
+        SC_HD_comboBox_Vendor_1 As combobox:
+            DisplayFields: =["Result","Code"]
+            IsSearchable: =false
+            Items: =Distinct(SearchContractCollect.Vendor, Vendor.Value)
+            OnSelect: =
+            SearchFields: =["Result"]
+            SearchItems: =[]
+            Template: =ListItemTemplate.Double
+            Width: =166
+            X: =539
+            Y: =130
+            ZIndex: =10
+
+        SC_HD_text_ProjectName_1 As text:
+            Default: =""
+            HintText: ="Text input"
+            X: =764
+            Y: =130
+            ZIndex: =11
+
+        SC_HD_text_ProjectNumber_1 As text:
+            Default: =""
+            HintText: ="Text input"
+            X: =764
+            Y: =226
+            ZIndex: =12
+
+        SC_HD_date_StartDate_1 As datepicker:
+            BorderColor: |
+                =If(SC_valid_startDate_msg="",RGBA(0, 18, 107, 1),Red)
+            DefaultDate: =
+            OnSelect: |+
+                =If(SC_HD_date_StartDate_1.SelectedDate > Today(),
+                Notify(msg_valid_afterToday,Error);
+                UpdateContext({SC_valid_startDate_msg  :Concatenate(SC_valid_startDate_msg,"Error")});,
+                SC_HD_date_StartDate_1.SelectedDate>SC_HD_date_EndDate_1,
+                Notify(msg_valid_afterEndDate,Error);
+                UpdateContext({SC_valid_startDate_msg:Concatenate(SC_valid_startDate_msg,"Error")});,
+                UpdateContext({SC_valid_startDate_msg:""});
+                )
+                
+            Width: =166
+            X: =278
+            Y: =226
+            ZIndex: =13
+
+        SC_HD_date_EndDate_1 As datepicker:
+            BorderColor: =If(SC_valid_endDate_msg="",RGBA(0, 18, 107, 1),Red)
+            OnChange: =
+            OnSelect: |+
+                =If(SC_HD_date_EndDate_1.SelectedDate > Today(),
+                Notify(msg_valid_afterToday,Error);
+                UpdateContext({SC_valid_endDate_msg:Concatenate(SC_valid_endDate_msg,"Error")});,
+                SC_HD_date_EndDate_1.SelectedDate < SC_HD_date_StartDate_1,
+                Notify(msg_valid_beforeStartDate,Error);
+                UpdateContext({SC_valid_endDate_msg:Concatenate(SC_valid_endDate_msg,"Error")});,
+                UpdateContext({SC_valid_endDate_msg:""});
+                )
+                
+            Width: =166
+            X: =539
+            Y: =226
+            ZIndex: =14
+
+        SC_HD_label_fromTo_1 As label:
+            Height: =21
+            Size: =15
+            Text: ="~"
+            Width: =76
+            X: =482
+            Y: =233
+            ZIndex: =15
+
+        Export_Button_1 As button:
+            DisplayMode: |-
+                =If(
+                    (SC_valid_startDate_msg = "" && SC_valid_endDate_msg = "") && 
+                    CountRows(Filter(
+                        SearchContractCollect As DS,
+                        SC_HD_text_ProjectName_1.Text in Lower(DS.ProjectName),
+                        SC_HD_text_ProjectNumber_1.Text in Lower(DS.Title),
+                        DS.'是主約、附約或追加金額？'.Value <> const_suppleB,
+                        DS.DocumentDate >= SC_HD_date_StartDate_1,
+                        DS.DocumentDate <= SC_HD_date_EndDate_1,
+                        If(
+                            CountRows(SC_HD_comboBox_Vendor_1.SelectedItems) > 0,
+                            DS.Vendor.Value in SC_HD_comboBox_Vendor_1.SelectedItems.Result,
+                            1 = 1
+                        ),
+                        If(
+                            CountRows(SC_HD_comboBox_ContactGroup_1.SelectedItems) > 0,
+                            DS.簽約主體 in SC_HD_comboBox_ContactGroup_1.SelectedItems.Result,
+                            1 = 1
+                        )
+                    ))>0
+                    ,DisplayMode.Edit,DisplayMode.Disabled)
+            Height: =39
+            OnSelect: |
+                =Refresh(ContractManagementList);
+                ClearCollect(
+                    ExportCollect,
+                    ContractManagementList
+                );
+                ClearCollect(
+                    Filte_C,
+                    Filter(
+                        ExportCollect As DS,
+                        SC_HD_text_ProjectName_1.Text in Lower(DS.ProjectName),
+                        SC_HD_text_ProjectNumber_1.Text in Lower(DS.Title),
+                        DS.DocumentDate >= SC_HD_date_StartDate_1,
+                        DS.DocumentDate <= SC_HD_date_EndDate_1,
+                        If(
+                            CountRows(SC_HD_comboBox_Vendor_1.SelectedItems) > 0,
+                            DS.Vendor.Value in SC_HD_comboBox_Vendor_1.SelectedItems.Result,
+                            1 = 1
+                        ),
+                        If(
+                            CountRows(SC_HD_comboBox_ContactGroup_1.SelectedItems) > 0,
+                            DS.簽約主體 in SC_HD_comboBox_ContactGroup_1.SelectedItems.Result,
+                            1 = 1
+                        ),
+                            Text(DS.deletionFlag) = Text(false)
+                    )
+                );
+                ClearCollect(
+                    addCol_C,
+                    AddColumns(
+                        Filte_C As Filter_DS,
+                        "Vendor_text",
+                        Filter_DS.Vendor.Value,
+                        "Title_contratType",
+                        Filter_DS.'是主約、附約或追加金額？'.Value,
+                        "contract_Group",
+                        Filter_DS.簽約主體,
+                        "Currency_text",
+                        Filter_DS.Currency.Value,
+                        "Part_A_Signer",
+                        Filter_DS.我方簽約,
+                        "Part_B_Signer",
+                        Filter_DS.對方簽約人,
+                        "sign-in Date",
+                        Filter_DS.'Sign-inDate',
+                        "Reason_T",
+                        Filter_DS.追加原因,
+                        "Contract_type",
+                        Filter_DS.ContractType.Value,
+                        "Belong_Main",
+                        If(
+                            Filter_DS.'是主約、附約或追加金額？'.Value = const_mainContract,
+                            Text(Filter_DS.ID),
+                            Filter_DS.'是主約、附約或追加金額？'.Value = const_subContract || (Filter_DS.'是主約、附約或追加金額？'.Value = const_suppleB && IsBlank(Filter_DS.附約)),
+                            Text(Filter_DS.主約),
+                            Filter_DS.'是主約、附約或追加金額？'.Value = const_suppleB && IsBlank(Filter_DS.主約),
+                            ""
+                        ),
+                        "sub_rank",
+                        If(
+                            Filter_DS.'是主約、附約或追加金額？'.Value = const_mainContract || (Filter_DS.'是主約、附約或追加金額？'.Value = const_suppleB && IsBlank(Filter_DS.附約)),
+                            -1,
+                            Filter_DS.'是主約、附約或追加金額？'.Value = const_subContract,
+                            Text(Filter_DS.ID),
+                            Filter_DS.'是主約、附約或追加金額？'.Value = const_suppleB && IsBlank(Filter_DS.主約),
+                            Filter_DS.附約
+                        ),
+                        "rank",
+                        If(
+                            Filter_DS.'是主約、附約或追加金額？'.Value = const_mainContract,
+                            1,
+                            Filter_DS.'是主約、附約或追加金額？'.Value = const_subContract,
+                            3,
+                            Filter_DS.'是主約、附約或追加金額？'.Value = const_suppleB && IsBlank(Filter_DS.附約),
+                            2,
+                            4
+                        ),
+                        "Group",
+                        If(
+                            Filter_DS.'是主約、附約或追加金額？'.Value = const_mainContract,
+                            Filter_DS.ProjectName,
+                            ""
+                        ),
+                        "SubGroup",
+                        If(
+                            Filter_DS.'是主約、附約或追加金額？'.Value = const_suppleB && IsBlank(Filter_DS.主約),
+                                First( 
+                                    Filter(Filte_C As fiter_DS,
+                                            fiter_DS.ID = Value(Filter_DS.附約)
+                                        )
+                                ).ProjectName,
+                            Filter_DS.'是主約、附約或追加金額？'.Value = const_subContract,
+                                Filter_DS.ProjectName,
+                                Blank()
+                        )
+                    )
+                );
+                ClearCollect(
+                    updateCol_C,
+                    UpdateIf(
+                        addCol_C As updateIf_DS,
+                        updateIf_DS.'是主約、附約或追加金額？'.Value = const_suppleB && IsBlank(updateIf_DS.主約),
+                        {
+                            Belong_Main: First(
+                                Filter(
+                                    addCol_C As fiter_DS,
+                                    fiter_DS.ID = Value(updateIf_DS.附約)
+                                )
+                            ).Belong_Main
+                        }
+                    )
+                );
+                
+                ClearCollect(
+                    fin_C,
+                    UpdateIf(
+                        updateCol_C As updateIf_DS,
+                        updateIf_DS.'是主約、附約或追加金額？'.Value <> const_mainContract,
+                        {
+                            Group: First(
+                                        Filter(
+                                            updateCol_C As fiter_DS,
+                                            fiter_DS.ID = Value(updateIf_DS.Belong_Main)
+                                        )
+                                ).ProjectName
+                        }
+                    )
+                );
+                
+                Set(
+                    OutPutTxt,
+                    JSON(
+                        SortByColumns(
+                            ShowColumns(
+                                fin_C,
+                                "contract_Group",
+                                "Vendor_text",
+                                "DocumentDate",
+                                "Title",
+                                "ProjectName",
+                                "Currency_text",
+                                "Amount",
+                                "Part_A_Signer",
+                                "Part_B_Signer",
+                                "sign-in Date",
+                                "Contract_type",
+                                "Remark",
+                                "Reason_T",
+                                "Belong_Main",
+                                "Title_contratType",
+                                "sub_rank",
+                                "rank",
+                                "Group",
+                                "SubGroup",
+                                "Created",
+                                "Modified"
+                            ),
+                            "contract_Group",
+                            Ascending,
+                            "Vendor_text",
+                            Ascending,
+                            "Belong_Main",
+                            Ascending,
+                            "sub_rank",
+                            Ascending,
+                            "rank",
+                            Ascending,
+                            "DocumentDate",
+                            Descending
+                
+                        ),
+                        JSONFormat.IndentFour
+                    )
+                );
+                Notify(
+                    msg_loading,
+                    NotificationType.Information,
+                    80000
+                );
+                Set(
+                    Var_Excel_URL,
+                    SCSExportExcelMethod.Run(OutPutTxt).linkoutput
+                );
+                If(
+                    IsBlankOrError(Var_Excel_URL),
+                    Notify(msg_exportError),
+                    Download(Var_Excel_URL);
+                    
+                );
+            Text: ="Export"
+            Width: =97
+            X: =1106
+            Y: =227
+            ZIndex: =17
+
+        SC_HD_lable_ContactGroup_1 As label:
+            FontWeight: =FontWeight.Bold
+            Height: =21
+            Size: =15
+            Text: ="Part A Company"
+            Width: =204
+            X: =278
+            Y: =96
+            ZIndex: =20
+
+        SC_HD_comboBox_ContactGroup_1 As combobox:
+            DisplayFields: =["Result","Code"]
+            Items: =Distinct(SearchContractCollect.簽約主體, 簽約主體)
+            OnSelect: =
+            SearchFields: =["Result"]
+            SearchItems: =Search(Distinct(SearchContractCollect.簽約主體, 簽約主體),SC_HD_comboBox_ContactGroup_1.SearchText,"Result")
+            Template: =ListItemTemplate.Double
+            Width: =166
+            X: =278
+            Y: =130
+            ZIndex: =21
+

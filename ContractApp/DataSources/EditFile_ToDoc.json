@@ -1,0 +1,9 @@
+[
+  {
+    "AddinConnectorId": "dda82424-532d-49d1-be89-f85cc6199ed2",
+    "AddinId": "6d1f157d-95bf-406d-b65d-cfd3240f724e",
+    "Name": "EditFile_ToDoc",
+    "ServiceKind": "AddinWadl",
+    "Type": "ServiceInfo"
+  }
+]

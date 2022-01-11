@@ -1,0 +1,9 @@
+[
+  {
+    "AddinConnectorId": "7674008f-5c1c-46c5-b699-0706a6b07c43",
+    "AddinId": "6d1f157d-95bf-406d-b65d-cfd3240f724e",
+    "Name": "GetJSONInput",
+    "ServiceKind": "AddinWadl",
+    "Type": "ServiceInfo"
+  }
+]

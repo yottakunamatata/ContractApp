@@ -1,0 +1,47 @@
+"'2258bf7c-c9a3-43b2-bfdd-b3b35d306706' As TestSuite":
+    Description: =""
+    DisplayName: ="套件"
+
+    "'2f966f48-de95-4306-aeb3-ce546974df6d' As TestCase":
+        Description: =""
+        DisplayName: ="案例"
+
+        Step1 As TestStep:
+            Description: |-
+                ="將 'DefineContract'.SelectedItems 設為 Table({'@odata.type':""#Microsoft.Azure.Connectors.SharePoint.SPListExpandedReference"",'Id':0,'Value':""主約""})"
+            Screen: =NewContract
+            Value: |-
+                =SetProperty(DefineContract.SelectedItems, Table({'@odata.type':"#Microsoft.Azure.Connectors.SharePoint.SPListExpandedReference",Id:0,Value:"主約"}))
+
+        Step2 As TestStep:
+            Description: ="選取 'DefineContract'"
+            Screen: =NewContract
+            Value: =Select(DefineContract)
+
+        Step3 As TestStep:
+            Description: ="將 'ProjectNumber'.Text 設為 ""ASX2422"""
+            Screen: =NewContract
+            Value: =SetProperty(ProjectNumber.Text, "ASX2422")
+
+        Step4 As TestStep:
+            Description: ="將 'DataCardValue21'.Text 設為 ""CCAZ"""
+            Screen: =NewContract
+            Value: =SetProperty(DataCardValue21.Text, "CCAZ")
+
+        Step5 As TestStep:
+            Description: |-
+                ="將 'DataCardValue28'.SelectedItems 設為 Table({'@odata.type':""#Microsoft.Azure.Connectors.SharePoint.SPListExpandedReference"",'Id':1,'Value':""USD""})"
+            Screen: =NewContract
+            Value: |-
+                =SetProperty(DataCardValue28.SelectedItems, Table({'@odata.type':"#Microsoft.Azure.Connectors.SharePoint.SPListExpandedReference",Id:1,Value:"USD"}))
+
+        Step6 As TestStep:
+            Description: ="選取 'DataCardValue28'"
+            Screen: =NewContract
+            Value: =Select(DataCardValue28)
+
+        Step7 As TestStep:
+            Description: ="將 'DataCardValue29'.Text 設為 ""145200"""
+            Screen: =NewContract
+            Value: =SetProperty(DataCardValue29.Text, "145200")
+

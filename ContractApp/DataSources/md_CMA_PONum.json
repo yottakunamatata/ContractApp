@@ -1,0 +1,44 @@
+[
+  {
+    "ApiId": "/providers/microsoft.powerapps/apis/shared_sharepointonline",
+    "CdpRevision": {
+      "BaseUrl": "/",
+      "LastChangedTimeString": "2021-12-02T19:05:24.2840000Z",
+      "RevisionNumber": 1
+    },
+    "ConnectedDataSourceInfoNameMapping": {
+      "{Attachments}": "附件",
+      "{Attachments}@odata.type": "{Attachments} ({Attachments}@odata.type)",
+      "{FilenameWithExtension}": "含副檔名的檔案名稱",
+      "{FullPath}": "完整路徑",
+      "{HasAttachments}": "有附件",
+      "{Identifier}": "識別碼",
+      "{IsFolder}": "為資料夾",
+      "{Link}": "項目連結",
+      "{ModerationComment}": "與此清單項目內容核准相關聯的註解",
+      "{ModerationStatus}": "內容核准狀態",
+      "{Name}": "名稱",
+      "{Path}": "資料夾路徑",
+      "{Thumbnail}": "Thumbnail",
+      "{TriggerWindowEndToken}": "觸發程式視窗結束權杖",
+      "{TriggerWindowStartToken}": "觸發程式視窗起始權杖",
+      "{VersionNumber}": "版本號碼",
+      "Author": "Created By",
+      "Author#Claims": "Created By Claims",
+      "ComplianceAssetId": "Compliance Asset Id",
+      "Created": "Created",
+      "Editor": "Modified By",
+      "Editor#Claims": "Modified By Claims",
+      "ID": "ID",
+      "Modified": "Modified",
+      "PONum": "PONum",
+      "Title": "Title"
+    },
+    "DatasetName": "https://changchuncorporation.sharepoint.com/sites/BPM_DEV2/dev_bpmsub/rdlab",
+    "EncodeDataset": true,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "Name": "md_CMA_PONum",
+    "Type": "ConnectedDataSourceInfo"
+  }
+]

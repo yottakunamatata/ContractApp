@@ -1,0 +1,81 @@
+App As appinfo:
+    BackEnabled: =false
+    OnStart: |+
+        =/* NewContractScreen Variable  */
+        ClearCollect(MyContract,{
+            Title: "Contract1"
+        },
+        {
+            Title: "Contract2"
+        },
+        {
+            Title: "Contract3"
+        });
+        
+        ClearCollect(ContractNum,{
+            Title: "CT001"
+        },
+        {
+            Title: "CT002"
+        },
+        {
+            Title: "CT003"
+        });
+        
+        ClearCollect(ContractType,{
+            Title: "主約"
+        },
+        {
+            Title: "附約"
+        });
+        
+        ClearCollect(VendorName,{
+            Title: "APS"
+        },{
+            Title: "AWC"
+        },
+        {
+            Title: "CTCI"
+        },
+        {
+            Title: "Gammage"
+        }
+        );
+        
+        ClearCollect(VendorNum,{
+            Title: "VD001"
+        },{
+            Title: "VD002"
+        },{
+            Title: "VD003"
+        });
+        
+        ClearCollect(VendorCombo,{
+            Title: "APS" , Code: "VD001"
+        },{
+            Title: "AWC" , Code: "VD002"
+        },
+        {
+            Title: "CTCI" , Code: "VD003"
+        }
+        );
+        
+        
+        // FilePath Variables
+        
+        
+        ClearCollect(PurchaseOrNot,{Title:"Purchasing"}, {Title:"Non-Purchasing"});
+        
+        ClearCollect(PurchaseType,{Title:"Project"},{Title:"Asset"},{Title:"Material"},{Title:"Expense"});
+        
+        ClearCollect(ProjectsExample,{Title:"SZ00121 DP Project"},{Title:"SZ00221 EHP Project"},{Title:"SZ00321 PME Project"});
+        
+        ClearCollect(POPR,{Title:"PO"});
+        
+        ClearCollect(PONum,{Title:"007500003"},{Title:"007500006"},{Title:"007500019"});
+        
+        ClearCollect(NonPJS,{Title:"Administration Section"},{Title:"IT Section"});
+        
+        
+    StartScreen: =SearchContract
+

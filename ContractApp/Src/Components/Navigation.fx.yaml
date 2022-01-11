@@ -1,0 +1,45 @@
+Navigation As CanvasComponent:
+    Fill: =RGBA(0, 0, 0, 0)
+    Height: =Max(App.Height,App.MinScreenHeight) - Max(App.Height,App.MinScreenHeight)/10.
+    Width: |
+        =Max(App.Width, App.MinScreenWidth)/6
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    Rectangle2 As rectangle:
+        Fill: =RGBA(241, 244, 249, 1)
+        Height: =691
+        Width: =227.66666666666666
+        ZIndex: =1
+
+    Label2 As label:
+        Align: =Align.Center
+        FontWeight: =FontWeight.Bold
+        Height: =108
+        Size: =18
+        Text: ="New Contract"
+        Width: =227.66666666666666
+        Y: =61
+        ZIndex: =2
+
+    Label2_1 As label:
+        Align: =Align.Center
+        FontWeight: =FontWeight.Bold
+        Height: =108
+        Size: =18
+        Text: ="Search Contract"
+        Width: =227
+        Y: =169
+        ZIndex: =3
+
+    Label2_2 As label:
+        Align: =Align.Center
+        FontWeight: =FontWeight.Bold
+        Height: =108
+        Size: =18
+        Text: ="Report"
+        Width: =227
+        Y: =277
+        ZIndex: =4
+

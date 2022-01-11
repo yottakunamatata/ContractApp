@@ -1,0 +1,9 @@
+[
+  {
+    "AddinConnectorId": "dda2962a-4f0a-4e7a-9880-4d69160417da",
+    "AddinId": "6d1f157d-95bf-406d-b65d-cfd3240f724e",
+    "Name": "UploadMultipleFilePath",
+    "ServiceKind": "AddinWadl",
+    "Type": "ServiceInfo"
+  }
+]

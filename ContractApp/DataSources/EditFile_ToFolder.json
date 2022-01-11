@@ -1,0 +1,9 @@
+[
+  {
+    "AddinConnectorId": "f881f75a-c406-4697-987d-a152de520143",
+    "AddinId": "6d1f157d-95bf-406d-b65d-cfd3240f724e",
+    "Name": "EditFile_ToFolder",
+    "ServiceKind": "AddinWadl",
+    "Type": "ServiceInfo"
+  }
+]

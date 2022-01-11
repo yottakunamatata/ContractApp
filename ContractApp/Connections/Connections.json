@@ -1,0 +1,387 @@
+{
+  "0e9c2288-d88c-4d56-8d67-13436d05e8d0": {
+    "connectionInstanceId": "/providers/microsoft.powerapps/apis/shared_logicflows/connections/df9c691c-9e7a-4b4a-953a-3be0bba32fcc",
+    "connectionParameters": {
+      "workFlowCallbackUri": "https://prod-28.southeastasia.logic.azure.com:443/workflows/02770d0483264c31b632ed9004704b4e/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=DUnp1VIzADW9a-9Le0F3XRw0Y1G2yePSUuii_1nAqQ0",
+      "workflowEndpoint": "/subscriptions/2c8cfba1-d125-4f31-a479-50156c7ed09f/resourceGroups/c5f7ad3e33f842aeb7460ad3b818d93c-6df186a256c94c6b94d45709f5c81702/providers/Microsoft.Logic/workflows/df9c691c-9e7a-4b4a-953a-3be0bba32fcc",
+      "workflowName": "df9c691c-9e7a-4b4a-953a-3be0bba32fcc",
+      "workflowPath": "/subscriptions/2c8cfba1-d125-4f31-a479-50156c7ed09f/resourceGroups/c5f7ad3e33f842aeb7460ad3b818d93c-6df186a256c94c6b94d45709f5c81702/providers/Microsoft.Logic/workflows/df9c691c-9e7a-4b4a-953a-3be0bba32fcc"
+    },
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "邏輯流程",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1534/1.0.1534.2605/logicflows/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_logicflows",
+      "parameterHints": {
+        "d3fbbb0f-ccc4-4f59-8367-9c420b9ad5fe": {
+          "value": "shared_sharepointonline"
+        },
+        "workflowEntityId": {},
+        "workflowName": {
+          "value": "df9c691c-9e7a-4b4a-953a-3be0bba32fcc"
+        }
+      },
+      "parameterHintsV2": {
+        "shared_sharepointonline": {
+          "value": "d3fbbb0f-ccc4-4f59-8367-9c420b9ad5fe"
+        },
+        "workflowEntityId": {},
+        "workflowName": {
+          "value": "df9c691c-9e7a-4b4a-953a-3be0bba32fcc"
+        }
+      }
+    },
+    "datasets": {},
+    "dataSources": [
+      "UploadMultiplePath2"
+    ],
+    "dependencies": {
+      "shared_sharepointonline": "d3fbbb0f-ccc4-4f59-8367-9c420b9ad5fe"
+    },
+    "dependents": [],
+    "id": "0e9c2288-d88c-4d56-8d67-13436d05e8d0"
+  },
+  "162ae350-03cc-4d8f-9afe-7b9985d0f4c4": {
+    "connectionInstanceId": "/providers/microsoft.powerapps/apis/shared_logicflows/connections/fd0d45da-a2dc-44a8-a189-9ac0b8199b82",
+    "connectionParameters": {
+      "workFlowCallbackUri": "https://prod-14.southeastasia.logic.azure.com:443/workflows/76b5542993d94e9ea9d7203324adb80d/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=jdCYXpXZC_7kp7hbi-2V3NlReJJVP0rPedj6YhgIpmY",
+      "workflowEndpoint": "/subscriptions/2c8cfba1-d125-4f31-a479-50156c7ed09f/resourceGroups/c5f7ad3e33f842aeb7460ad3b818d93c-6df186a256c94c6b94d45709f5c81702/providers/Microsoft.Logic/workflows/fd0d45da-a2dc-44a8-a189-9ac0b8199b82",
+      "workflowName": "fd0d45da-a2dc-44a8-a189-9ac0b8199b82",
+      "workflowPath": "/subscriptions/2c8cfba1-d125-4f31-a479-50156c7ed09f/resourceGroups/c5f7ad3e33f842aeb7460ad3b818d93c-6df186a256c94c6b94d45709f5c81702/providers/Microsoft.Logic/workflows/fd0d45da-a2dc-44a8-a189-9ac0b8199b82"
+    },
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "邏輯流程",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1534/1.0.1534.2605/logicflows/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_logicflows",
+      "parameterHints": {
+        "d3fbbb0f-ccc4-4f59-8367-9c420b9ad5fe": {
+          "value": "shared_sharepointonline"
+        },
+        "workflowEntityId": {},
+        "workflowName": {
+          "value": "fd0d45da-a2dc-44a8-a189-9ac0b8199b82"
+        }
+      },
+      "parameterHintsV2": {
+        "shared_sharepointonline": {
+          "value": "d3fbbb0f-ccc4-4f59-8367-9c420b9ad5fe"
+        },
+        "workflowEntityId": {},
+        "workflowName": {
+          "value": "fd0d45da-a2dc-44a8-a189-9ac0b8199b82"
+        }
+      }
+    },
+    "datasets": {},
+    "dataSources": [
+      "EditFile_ToDoc"
+    ],
+    "dependencies": {
+      "shared_sharepointonline": "d3fbbb0f-ccc4-4f59-8367-9c420b9ad5fe"
+    },
+    "dependents": [],
+    "id": "162ae350-03cc-4d8f-9afe-7b9985d0f4c4"
+  },
+  "2855579e-8cd6-42a1-8927-d2db706dd73a": {
+    "connectionInstanceId": "/providers/microsoft.powerapps/apis/shared_logicflows/connections/b8b1a3f3-8509-44bc-b8e8-95e6318c061f",
+    "connectionParameters": {
+      "workflowEndpoint": "/subscriptions/2c8cfba1-d125-4f31-a479-50156c7ed09f/resourceGroups/C5F7AD3E33F842AEB7460AD3B818D93C-6DF186A256C94C6B94D45709F5C81702/providers/Microsoft.Logic/workflows/b8b1a3f3-8509-44bc-b8e8-95e6318c061f",
+      "workflowName": "b8b1a3f3-8509-44bc-b8e8-95e6318c061f",
+      "workflowPath": "/subscriptions/2c8cfba1-d125-4f31-a479-50156c7ed09f/resourceGroups/C5F7AD3E33F842AEB7460AD3B818D93C-6DF186A256C94C6B94D45709F5C81702/providers/Microsoft.Logic/workflows/b8b1a3f3-8509-44bc-b8e8-95e6318c061f"
+    },
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "邏輯流程",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1534/1.0.1534.2605/logicflows/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_logicflows",
+      "parameterHints": {
+        "workflowEntityId": {},
+        "workflowName": {
+          "value": "b8b1a3f3-8509-44bc-b8e8-95e6318c061f"
+        }
+      },
+      "parameterHintsV2": {
+        "workflowEntityId": {},
+        "workflowName": {
+          "value": "b8b1a3f3-8509-44bc-b8e8-95e6318c061f"
+        }
+      }
+    },
+    "datasets": {},
+    "dataSources": [
+      "UploadMultipleFilePath"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "2855579e-8cd6-42a1-8927-d2db706dd73a"
+  },
+  "38bfdd2e-c988-4b51-adca-e1514f45b6e8": {
+    "connectionInstanceId": "/providers/microsoft.powerapps/apis/shared_office365users/connections/220cdbf9133a45ac86562cd957b50077",
+    "connectionParameters": {
+      "sku": "Enterprise"
+    },
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "Office 365 使用者",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1542/1.0.1542.2635/office365users/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_office365users",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {},
+    "dataSources": [
+      "Office365Users"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "38bfdd2e-c988-4b51-adca-e1514f45b6e8"
+  },
+  "4c4664fc-f73b-46a2-a256-ea22f97dec56": {
+    "connectionInstanceId": "/providers/microsoft.powerapps/apis/shared_logicflows/connections/bf9c656b-757f-4215-bf66-ee4d713c1c0e",
+    "connectionParameters": {
+      "workFlowCallbackUri": "https://prod-19.southeastasia.logic.azure.com:443/workflows/f3914d37968b4edba2d76670fbdc8241/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=bjLQ034jJBqPNrjTIbqHg9eo_jSM0GH8ANNMWxhm_ME",
+      "workflowEndpoint": "/subscriptions/2c8cfba1-d125-4f31-a479-50156c7ed09f/resourceGroups/c5f7ad3e33f842aeb7460ad3b818d93c-6df186a256c94c6b94d45709f5c81702/providers/Microsoft.Logic/workflows/bf9c656b-757f-4215-bf66-ee4d713c1c0e",
+      "workflowName": "bf9c656b-757f-4215-bf66-ee4d713c1c0e",
+      "workflowPath": "/subscriptions/2c8cfba1-d125-4f31-a479-50156c7ed09f/resourceGroups/c5f7ad3e33f842aeb7460ad3b818d93c-6df186a256c94c6b94d45709f5c81702/providers/Microsoft.Logic/workflows/bf9c656b-757f-4215-bf66-ee4d713c1c0e"
+    },
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "邏輯流程",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1534/1.0.1534.2605/logicflows/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_logicflows",
+      "parameterHints": {
+        "workflowEntityId": {},
+        "workflowName": {
+          "value": "bf9c656b-757f-4215-bf66-ee4d713c1c0e"
+        }
+      },
+      "parameterHintsV2": {
+        "workflowEntityId": {},
+        "workflowName": {
+          "value": "bf9c656b-757f-4215-bf66-ee4d713c1c0e"
+        }
+      }
+    },
+    "datasets": {},
+    "dataSources": [
+      "GetJSONInput"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "4c4664fc-f73b-46a2-a256-ea22f97dec56"
+  },
+  "65bf6d34-c20d-48f9-bee8-24ddbc5dafc9": {
+    "connectionInstanceId": "/providers/microsoft.powerapps/apis/shared_logicflows/connections/364f5fc5-b744-402d-8618-575cf9d87db3",
+    "connectionParameters": {
+      "workFlowCallbackUri": "https://prod-16.southeastasia.logic.azure.com:443/workflows/f8b7551059b241da9dc71971de6ca5cd/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=kUnTKNOXwVdKD1AkLGkaiLm2_HxJ49cTQZctax-SIFU",
+      "workflowEndpoint": "/subscriptions/2c8cfba1-d125-4f31-a479-50156c7ed09f/resourceGroups/c5f7ad3e33f842aeb7460ad3b818d93c-6df186a256c94c6b94d45709f5c81702/providers/Microsoft.Logic/workflows/364f5fc5-b744-402d-8618-575cf9d87db3",
+      "workflowName": "364f5fc5-b744-402d-8618-575cf9d87db3",
+      "workflowPath": "/subscriptions/2c8cfba1-d125-4f31-a479-50156c7ed09f/resourceGroups/c5f7ad3e33f842aeb7460ad3b818d93c-6df186a256c94c6b94d45709f5c81702/providers/Microsoft.Logic/workflows/364f5fc5-b744-402d-8618-575cf9d87db3"
+    },
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "邏輯流程",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1534/1.0.1534.2605/logicflows/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_logicflows",
+      "parameterHints": {
+        "d3fbbb0f-ccc4-4f59-8367-9c420b9ad5fe": {
+          "value": "shared_sharepointonline"
+        },
+        "workflowEntityId": {},
+        "workflowName": {
+          "value": "364f5fc5-b744-402d-8618-575cf9d87db3"
+        }
+      },
+      "parameterHintsV2": {
+        "shared_sharepointonline": {
+          "value": "d3fbbb0f-ccc4-4f59-8367-9c420b9ad5fe"
+        },
+        "workflowEntityId": {},
+        "workflowName": {
+          "value": "364f5fc5-b744-402d-8618-575cf9d87db3"
+        }
+      }
+    },
+    "datasets": {},
+    "dataSources": [
+      "UploadFiletoDocumentLibrary"
+    ],
+    "dependencies": {
+      "shared_sharepointonline": "d3fbbb0f-ccc4-4f59-8367-9c420b9ad5fe"
+    },
+    "dependents": [],
+    "id": "65bf6d34-c20d-48f9-bee8-24ddbc5dafc9"
+  },
+  "8b6eb296-f89a-481b-80a1-055dd85d7491": {
+    "connectionInstanceId": "/providers/microsoft.powerapps/apis/shared_logicflows/connections/4333c022-2fd2-4d33-ae5c-8eaff62e5ed0",
+    "connectionParameters": {
+      "workFlowCallbackUri": "https://prod-28.southeastasia.logic.azure.com:443/workflows/48a8af2b239d401191e0ab534ee5770f/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=coEjcMrtiPWdquQrW4hSgr9uR65ZRS2BeU-jlmveKT0",
+      "workflowEndpoint": "/subscriptions/2c8cfba1-d125-4f31-a479-50156c7ed09f/resourceGroups/c5f7ad3e33f842aeb7460ad3b818d93c-6df186a256c94c6b94d45709f5c81702/providers/Microsoft.Logic/workflows/4333c022-2fd2-4d33-ae5c-8eaff62e5ed0",
+      "workflowName": "4333c022-2fd2-4d33-ae5c-8eaff62e5ed0",
+      "workflowPath": "/subscriptions/2c8cfba1-d125-4f31-a479-50156c7ed09f/resourceGroups/c5f7ad3e33f842aeb7460ad3b818d93c-6df186a256c94c6b94d45709f5c81702/providers/Microsoft.Logic/workflows/4333c022-2fd2-4d33-ae5c-8eaff62e5ed0"
+    },
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "邏輯流程",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1534/1.0.1534.2605/logicflows/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_logicflows",
+      "parameterHints": {
+        "c56cafc2-6869-40cf-a190-9aacd079aaef": {
+          "value": "shared_excelonlinebusiness"
+        },
+        "d3fbbb0f-ccc4-4f59-8367-9c420b9ad5fe": {
+          "value": "shared_sharepointonline"
+        },
+        "workflowEntityId": {},
+        "workflowName": {
+          "value": "4333c022-2fd2-4d33-ae5c-8eaff62e5ed0"
+        }
+      },
+      "parameterHintsV2": {
+        "shared_excelonlinebusiness": {
+          "value": "c56cafc2-6869-40cf-a190-9aacd079aaef"
+        },
+        "shared_sharepointonline": {
+          "value": "d3fbbb0f-ccc4-4f59-8367-9c420b9ad5fe"
+        },
+        "workflowEntityId": {},
+        "workflowName": {
+          "value": "4333c022-2fd2-4d33-ae5c-8eaff62e5ed0"
+        }
+      }
+    },
+    "datasets": {},
+    "dataSources": [
+      "SCSExportExcelMethod"
+    ],
+    "dependencies": {
+      "shared_excelonlinebusiness": "c56cafc2-6869-40cf-a190-9aacd079aaef",
+      "shared_sharepointonline": "d3fbbb0f-ccc4-4f59-8367-9c420b9ad5fe"
+    },
+    "dependents": [],
+    "id": "8b6eb296-f89a-481b-80a1-055dd85d7491"
+  },
+  "c56cafc2-6869-40cf-a190-9aacd079aaef": {
+    "connectionInstanceId": "/providers/microsoft.powerapps/apis/shared_excelonlinebusiness/connections/1588dbc71a904d0da0e5197a8e512fb0",
+    "connectionParameters": {
+      "sku": "Enterprise"
+    },
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "Excel Online (商務)",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1535/1.0.1535.2607/excelonlinebusiness/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_excelonlinebusiness",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {},
+    "dataSources": [],
+    "dependencies": {},
+    "dependents": [
+      "8b6eb296-f89a-481b-80a1-055dd85d7491"
+    ],
+    "id": "c56cafc2-6869-40cf-a190-9aacd079aaef"
+  },
+  "cc7049fa-5131-40f9-a434-8b469876c356": {
+    "connectionInstanceId": "/providers/microsoft.powerapps/apis/shared_logicflows/connections/aaf60d7a-2994-4030-a494-6b3ea6ecea22",
+    "connectionParameters": {
+      "workFlowCallbackUri": "https://prod-05.southeastasia.logic.azure.com:443/workflows/d93a9bba653c42d4ac7db9268c173a8a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=vTOAcYLQUa8WC2_VAaovU4RaFyQyCsF5Pfaba3UWzDk",
+      "workflowEndpoint": "/subscriptions/2c8cfba1-d125-4f31-a479-50156c7ed09f/resourceGroups/c5f7ad3e33f842aeb7460ad3b818d93c-6df186a256c94c6b94d45709f5c81702/providers/Microsoft.Logic/workflows/aaf60d7a-2994-4030-a494-6b3ea6ecea22",
+      "workflowName": "aaf60d7a-2994-4030-a494-6b3ea6ecea22",
+      "workflowPath": "/subscriptions/2c8cfba1-d125-4f31-a479-50156c7ed09f/resourceGroups/c5f7ad3e33f842aeb7460ad3b818d93c-6df186a256c94c6b94d45709f5c81702/providers/Microsoft.Logic/workflows/aaf60d7a-2994-4030-a494-6b3ea6ecea22"
+    },
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "邏輯流程",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1534/1.0.1534.2605/logicflows/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_logicflows",
+      "parameterHints": {
+        "d3fbbb0f-ccc4-4f59-8367-9c420b9ad5fe": {
+          "value": "shared_sharepointonline"
+        },
+        "workflowEntityId": {},
+        "workflowName": {
+          "value": "aaf60d7a-2994-4030-a494-6b3ea6ecea22"
+        }
+      },
+      "parameterHintsV2": {
+        "shared_sharepointonline": {
+          "value": "d3fbbb0f-ccc4-4f59-8367-9c420b9ad5fe"
+        },
+        "workflowEntityId": {},
+        "workflowName": {
+          "value": "aaf60d7a-2994-4030-a494-6b3ea6ecea22"
+        }
+      }
+    },
+    "datasets": {},
+    "dataSources": [
+      "EditFile_ToFolder"
+    ],
+    "dependencies": {
+      "shared_sharepointonline": "d3fbbb0f-ccc4-4f59-8367-9c420b9ad5fe"
+    },
+    "dependents": [],
+    "id": "cc7049fa-5131-40f9-a434-8b469876c356"
+  },
+  "d3fbbb0f-ccc4-4f59-8367-9c420b9ad5fe": {
+    "connectionInstanceId": "/providers/microsoft.powerapps/apis/shared_sharepointonline/connections/21e85fb93a554912abca137cdca357c0",
+    "connectionParameters": {
+      "sku": "Enterprise"
+    },
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "SharePoint",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1539/1.0.1539.2620/sharepointonline/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_sharepointonline",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {
+      "https://changchuncorporation.sharepoint.com/sites/BPM_DEV2/dev_bpmsub/rdlab": {
+        "dataSources": {
+          "ContractFilePath": {
+            "tableName": "5317f6e2-c2bd-4622-bb48-6073a5877abf"
+          },
+          "ContractFiles": {
+            "tableName": "ac721157-e8e0-414c-902e-5effc3da96cd"
+          },
+          "ContractManagementList": {
+            "tableName": "de904b80-5cd8-41f6-898a-2406862e1170"
+          },
+          "ECC_ExchangeRate": {
+            "tableName": "70a07c1f-72e7-4209-99c8-cbd65d9a58c7"
+          },
+          "md_CMA_PONum": {
+            "tableName": "20c7c426-fa61-4fad-94c6-4affc83fe941"
+          },
+          "md_CMA_ProjectList": {
+            "tableName": "62c2f213-b333-4ee9-9a5d-bcd93a67aad1"
+          },
+          "Vendor": {
+            "tableName": "a6a154ba-1276-4936-82aa-f367cc9ac270"
+          }
+        }
+      }
+    },
+    "dataSources": [
+      "ContractManagementList",
+      "ContractFilePath",
+      "md_CMA_ProjectList",
+      "md_CMA_PONum",
+      "ContractFiles",
+      "Vendor",
+      "ECC_ExchangeRate"
+    ],
+    "dependencies": {},
+    "dependents": [
+      "0e9c2288-d88c-4d56-8d67-13436d05e8d0",
+      "cc7049fa-5131-40f9-a434-8b469876c356",
+      "162ae350-03cc-4d8f-9afe-7b9985d0f4c4",
+      "65bf6d34-c20d-48f9-bee8-24ddbc5dafc9",
+      "8b6eb296-f89a-481b-80a1-055dd85d7491"
+    ],
+    "id": "d3fbbb0f-ccc4-4f59-8367-9c420b9ad5fe"
+  }
+}

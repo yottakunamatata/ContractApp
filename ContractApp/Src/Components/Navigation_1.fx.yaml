@@ -1,0 +1,52 @@
+Navigation_1 As CanvasComponent:
+    ContentLanguage: =
+    Fill: =RGBA(0, 0, 0, 0)
+    Height: =Max(App.Height,App.MinScreenHeight) - Max(App.Height,App.MinScreenHeight)/10
+    NavItem: |-
+        =Table({
+            Title: "NewContract",
+            TargetScreen: NewContract
+            },
+            {
+            Title: "SearchContract",
+            TargetScreen: SearchContract
+            },
+            {
+            Title: "Report",
+            TargetScreen: Record})
+    Width: =Max(App.Width, App.MinScreenWidth)/6
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    Rectangle7 As rectangle:
+        Fill: =RGBA(237, 237, 237, 1)
+        Height: =691.2
+        Width: =227.66666666666666
+        ZIndex: =1
+
+    "Gallery7 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+        Items: =Navigation_1.NavItem
+        Layout: =Layout.Vertical
+        TemplatePadding: =0
+        TemplateSize: =116
+        Width: =273
+        Y: =40
+        ZIndex: =2
+
+        Title7 As label:
+            Color: =RGBA(0, 121, 187, 1)
+            Height: =42
+            OnSelect: =Navigate(ThisItem.TargetScreen,Fade);Set(SelectFlag,true);
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =18
+            Text: =ThisItem.Title
+            VerticalAlign: =VerticalAlign.Top
+            Width: =193
+            X: =23
+            Y: =39
+            ZIndex: =2
+
